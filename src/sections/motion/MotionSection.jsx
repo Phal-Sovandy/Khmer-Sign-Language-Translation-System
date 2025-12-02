@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.esm.jsx";
 import breakingWall from "../../assets/videos/breaking_wall.mp4";
-import manSign from "../../assets/images/signs/man_sign.png";
+import manSign from "../../assets/images/signs/man_sign.webp";
 import MediaWrapper from "../../components/ui/MediaWrapper";
 
 // Register ScrollTrigger globally for GSAP usage

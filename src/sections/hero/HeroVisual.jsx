@@ -1,10 +1,10 @@
-import heroHand from "../../assets/images/misc/hero-hand.png";
+import heroHand from "../../assets/images/misc/hero-hand.webp";
 import MediaWrapper from "../../components/ui/MediaWrapper";
 
 const DataPill = ({ label, confidence }) => (
-  <div className="text-sm font-mono text-white/80 animate-pulse-glow">
+  <div className="text-xs sm:text-sm font-mono text-white/80 animate-pulse-glow">
     <span>{label}</span>
-    <span className="pl-2 text-cyan-300">{confidence}</span>
+    <span className="pl-1 sm:pl-2 text-cyan-300">{confidence}</span>
   </div>
 );
 
@@ -22,20 +22,20 @@ const frames = [
 
 export default function HeroVisual({ stats = [] }) {
   return (
-    <div className="relative flex items-center justify-center lg:justify-end lg:pr-0 lg:translate-x-[8vw] mr-5 lg:mr-0">
-      <div className="relative w-full lg:w-[33vw]">
-        <img
+    <div className="relative flex items-center justify-center mt-8 sm:mt-12 md:mt-16 lg:mt-0 lg:justify-end lg:pr-0 lg:translate-x-[8vw] mr-0 sm:mr-2 md:mr-4 lg:mr-0">
+      <div className="relative w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-none lg:w-[33vw]">
+        <MediaWrapper
           src={heroHand}
           alt="Hand gesture visualization"
-          fetchPriority="high"
           eager={true}
-          className="absolute right-[-10vw] top-1/2 z-0 h-auto w-[180vw] drop-shadow-[0_25px_45px_rgba(255,0,0,0.7)] lg:right-[-1vw] lg:w-[250%]"
+          fetchPriority="high"
+          className="absolute right-[-15vw] sm:right-[-12vw] md:right-[-10vw] top-1/2 z-0 h-auto w-[200vw] sm:w-[190vw] md:w-[180vw] drop-shadow-[0_25px_45px_rgba(255,0,0,0.7)] lg:right-[-1vw] lg:w-[150%]"
           style={{
-            transform: "translate(2%, -35%) rotate(9deg)",
+            transform: "translate(-10%, 65%) rotate(9deg)",
             filter: "drop-shadow(0 45px 100px rgba(127,129,255,0.3))",
           }}
         />
-        <div className="relative aspect-square rounded-none p-8 lg:p-12 lg:-translate-x-[7vw]">
+        <div className="relative aspect-square rounded-none p-4 sm:p-6 md:p-8 lg:p-12 lg:-translate-x-[7vw]">
           {frames.map((frame, index) => {
             const stat = stats[index % stats.length];
 

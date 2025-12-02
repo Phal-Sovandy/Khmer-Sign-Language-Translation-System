@@ -1,4 +1,4 @@
-import handReach from "../../assets/images/misc/hand.png";
+import handReach from "../../assets/images/misc/hand.webp";
 import MediaWrapper from "../../components/ui/MediaWrapper";
 
 const copy =

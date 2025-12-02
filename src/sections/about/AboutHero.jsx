@@ -6,7 +6,7 @@ export default function AboutHero() {
       {/* Left hand image */}
       <div className="lg:z-10 absolute left-0 top-40 w-[350px] lg:w-[600px] opacity-70 pointer-events-none -translate-x-4">
         <MediaWrapper
-          src="/src/assets/images/signs/point-sign.png"
+          src="/src/assets/images/signs/point-sign.webp"
           fetchPriority="high"
           eager={true}
           alt=""
@@ -20,7 +20,7 @@ export default function AboutHero() {
       {/* Right hand image */}
       <div className="absolute right-0 top-24 w-[350px] lg:w-[600px] opacity-70 pointer-events-none translate-x-4">
         <MediaWrapper
-          src="/src/assets/images/signs/peace-sign.png"
+          src="/src/assets/images/signs/peace-sign.webp"
           fetchPriority="high"
           eager={true}
           alt=""
@@ -50,7 +50,7 @@ export default function AboutHero() {
             <video
               src="/src/assets/videos/about-cover.mp4"
               preload="auto"
-              poster="/src/assets/images/about-cover.png"
+              poster="/src/assets/images/about-cover.webp"
               autoPlay
               loop
               muted

@@ -1,4 +1,4 @@
-import appInterfaceImg from "../../assets/images/misc/demo.png";
+import appInterfaceImg from "../../assets/images/misc/demo.webp";
 import MediaWrapper from "../../components/ui/MediaWrapper";
 
 export default function InterfaceShowcase() {

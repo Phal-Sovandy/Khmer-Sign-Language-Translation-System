@@ -84,42 +84,42 @@ const stories = [
     title: "The Problem",
     description:
       "Communication should never be a barrier — yet for many people in the Deaf and speech-impaired community, daily conversations can feel isolating, limited, and exhausting. We saw firsthand how a lack of accessible communication tools creates unfair gaps in education, work, and social life.",
-    image: "/src/assets/images/story/story-1.png",
+    image: "/src/assets/images/story/story-1.webp",
     imagePosition: "left",
   },
   {
     title: "The Spark",
     description:
       "Our journey began with a simple question: What if technology could listen with its eyes? We believed that with the right tools, gesture and expression could become just as powerful as spoken words.",
-    image: "/src/assets/images/story/story-2.png",
+    image: "/src/assets/images/story/story-2.webp",
     imagePosition: "right",
   },
   {
     title: "The Solution",
     description:
       "That belief led us to build a Khmer sign language translation system that converts gestures into readable text and speech — making communication faster, clearer, and more human.",
-    image: "/src/assets/images/story/story-3.png",
+    image: "/src/assets/images/story/story-3.webp",
     imagePosition: "left",
   },
   {
     title: "The People",
     description:
       "We build for students trying to learn, workers trying to connect, families trying to understand, and a community that deserves to be heard — without boundaries.",
-    image: "/src/assets/images/story/story-4.png",
+    image: "/src/assets/images/story/story-4.webp",
     imagePosition: "right",
   },
   {
     title: "The Growth",
     description:
       "What began as a small idea has grown into a meaningful project driven by learning, testing, and listening to real users.",
-    image: "/src/assets/images/story/story-5.png",
+    image: "/src/assets/images/story/story-5.webp",
     imagePosition: "left",
   },
   {
     title: "The Vision",
     description:
       "Our goal is simple: a future where language never divides — and technology brings people closer instead of further apart.",
-    image: "/src/assets/images/story/story-6.png",
+    image: "/src/assets/images/story/story-6.webp",
     imagePosition: "right",
   },
 ];

@@ -109,7 +109,7 @@ function ProjectOverview() {
       {/* Hero Image */}
       <div className="mb-8 rounded-xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
         {/* <MediaWrapper
-          src="/src/assets/images/misc/hand-landmark.png"
+          src="/src/assets/images/misc/hand-landmark.webp"
           alt="Hand landmark detection"
           className="w-full max-w-2xl mx-auto"
         /> */}
@@ -457,7 +457,7 @@ function HowItWorks() {
         <figure className="my-8">
           <div className="rounded-xl overflow-hidden bg-white/5 border border-white/10">
             <MediaWrapper
-              src="/src/assets/images/how-it-work/how-it-work-1.png"
+              src="/src/assets/images/how-it-work/how-it-work-1.webp"
               alt="Hand landmark detection using MediaPipe"
               className="w-full"
             />
@@ -480,7 +480,7 @@ function HowItWorks() {
         <figure className="my-8">
           <div className="rounded-xl overflow-hidden bg-white/5 border border-white/10">
             <MediaWrapper
-              src="/src/assets/images/how-it-work/how-it-work-2.png"
+              src="/src/assets/images/how-it-work/how-it-work-2.webp"
               alt="Gesture features being processed by the trained recognition model"
               className="w-full"
             />
@@ -500,7 +500,7 @@ function HowItWorks() {
         <figure className="my-8">
           <div className="rounded-xl overflow-hidden bg-white/5 border border-white/10">
             <MediaWrapper
-              src="/src/assets/images/how-it-work/how-it-work-3.png"
+              src="/src/assets/images/how-it-work/how-it-work-3.webp"
               alt="Real-time output showing translated text and speech feature"
               className="w-full"
             />

@@ -55,7 +55,7 @@ function DemoCard({ copied }) {
           <div className="w-28 h-28 bg-white rounded-lg p-2.5 flex items-center justify-center">
             {/* QR Code Pattern */}
             <MediaWrapper
-              src="../../../src/assets/images/demo-qr.png"
+              src="../../../src/assets/images/demo-qr.webp"
               alt="QR Code for demo"
             />
           </div>

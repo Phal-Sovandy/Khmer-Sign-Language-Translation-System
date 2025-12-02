@@ -1,5 +1,5 @@
-import namasteImg from "../../assets/images/signs/namaste.png";
-import cursorImg from "../../assets/images/misc/cursor.png";
+import namasteImg from "../../assets/images/signs/namaste.webp";
+import cursorImg from "../../assets/images/misc/cursor.webp";
 
 export default function StatsSection() {
   return (

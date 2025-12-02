@@ -1,5 +1,5 @@
-import namasteImg from "../../assets/images/signs/namaste.png";
-import cursorImg from "../../assets/images/misc/cursor.png";
+import namasteImg from "../../assets/images/signs/namaste.webp";
+import cursorImg from "../../assets/images/misc/cursor.webp";
 import MediaWrapper from "../../components/ui/MediaWrapper";
 import DatasetCollage from "../../components/visuals/DatasetCollage";
 
@@ -119,7 +119,7 @@ function DemoImage({ cursorImg, namasteImg }) {
       </div>
 
       {/* Detected Text popup */}
-      <div className="absolute -top-6 right-[-100px] translate-x-8 bg-white/10 backdrop-blur-lg border border-white/30 rounded-xl px-6 py-4 shadow-2xl min-w-[220px]">
+      <div className="absolute -top-6 right-[-20px] lg:right-[-100px] translate-x-8 bg-white/10 backdrop-blur-lg border border-white/30 rounded-xl px-6 py-4 shadow-2xl min-w-[220px]">
         <p className="text-xs text-white/70 mb-1.5 tracking-wide">
           Detected Text
         </p>
@@ -170,7 +170,7 @@ function SecurityIcons() {
   return (
     <div className="relative w-full h-96 flex items-center justify-center">
       {/* Icon 1 - Database/Stack */}
-      <div className="absolute top-10 left-8 md:-top-40 md:left-35">
+      <div className="absolute top-[-100px] lg:top-[-100px] left-[50px] lg:left-[-300px] md:-top-40 md:left-35">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="360"
@@ -186,7 +186,7 @@ function SecurityIcons() {
       </div>
 
       {/* Icon 2 - Lock */}
-      <div className="absolute top-16 right-12 md:top-36 md:right-26">
+      <div className="absolute top-[50px] lg:top-[-100px] right-[-20px] lg:right-[-120px] md:top-36 md:right-26">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="300"
@@ -202,13 +202,13 @@ function SecurityIcons() {
       </div>
 
       {/* Icon 3 - Shield */}
-      <div className="absolute bottom-20 left-16 md:bottom-4 md:left-20">
+      <div className="absolute bottom-[10px] lg:bottom-[-80px] left-[-20px] lg:left-[50px] md:bottom-4 md:left-20">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="180"
           height="180"
           viewBox="0 0 24 24"
-          className="text-white rotate-[-5deg] hover:scale-110 transition-transform drop-shadow-[0_8px_30px_rgba(47,107,255,0.4)]"
+          className="text-white rotate-[-5deg] hover:scale-110 transition-transform lg:drop-shadow-[0_8px_30px_rgba(47,107,255,0.4)] drop-shadow-[0_8px_30px_rgba(47,107,255,0.8)]"
         >
           <path
             fill="currentColor"
@@ -218,13 +218,13 @@ function SecurityIcons() {
       </div>
 
       {/* Icon 4 - User/Profile */}
-      <div className="absolute bottom-12 right-8 md:bottom-56 md:right-22">
+      <div className="absolute lg:bottom-[-100px] bottom-[-30px] lg:right-40 right-[50px] md:bottom-56 md:right-22">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="240"
           height="240"
           viewBox="0 0 32 32"
-          className="text-white rotate-[15deg] hover:scale-110 transition-transform drop-shadow-[0_8px_30px_rgba(47,107,255,0.4)]"
+          className="text-white rotate-[15deg] hover:scale-110 transition-transform lg:drop-shadow-[0_8px_30px_rgba(47,107,255,0.4)] drop-shadow-[0_8px_30px_rgba(47,107,255,0.8)]"
         >
           <path
             fill="currentColor"
@@ -310,7 +310,7 @@ function FloatingTextBoxes() {
   ];
 
   return (
-    <div className="relative w-full h-96 scale-90 lg:scale-110">
+    <div className="relative w-[30vw] lg:w-full h-96 scale-90 lg:scale-110">
       {textBoxes.map((box) => (
         <div
           key={box.id}
