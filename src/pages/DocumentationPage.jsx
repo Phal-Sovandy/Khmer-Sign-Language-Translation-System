@@ -17,6 +17,7 @@ import {
   FutureWork,
   Community,
 } from "../sections/documentation";
+import { SEO } from "../components/seo";
 
 /**
  * Main Documentation Page Component
@@ -52,6 +53,11 @@ export default function DocumentationPage() {
 
   return (
     <div className="min-h-screen bg-brand-background overflow-x-clip">
+      <SEO
+        title="Documentation"
+        url="/documentation"
+        keywords="sign language documentation, KSLTS documentation, system requirements, how it works, API documentation, technical documentation, dataset training, machine learning model, gesture recognition guide, installation guide"
+      />
       <DocHeader />
 
       <main className="pt-28 pb-16">

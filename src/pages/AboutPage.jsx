@@ -11,10 +11,16 @@ import {
   VoicesSection,
   JoinCommunitySection,
 } from "../sections/about";
+import { SEO } from "../components/seo";
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-brand-background overflow-x-clip">
+      <SEO
+        title="About"
+        url="/about"
+        keywords="about KSLTS, sign language project, team members, mission statement, accessibility project, Cambodia sign language, deaf community support, capstone project, data science project, computer vision project"
+      />
       {/* Header */}
       <Header showDemoButton={false} />
 

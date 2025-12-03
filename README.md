@@ -6,16 +6,17 @@
 ![License](https://img.shields.io/badge/license-ISC-green.svg)
 ![React](https://img.shields.io/badge/React-19.2.0-61dafb?logo=react)
 ![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF?logo=vite)
+![Vercel](https://img.shields.io/badge/deployed%20on-Vercel-000000?logo=vercel)
 
 **A web-based application that translates Khmer sign language gestures into readable text and speech**
 
-[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Documentation](#-documentation) • [Contributing](#-contributing) • [License](#-license)
+[Live Demo](https://khmer-sign-language-translation-sys.vercel.app) • [Features](#features) • [Installation](#getting-started) • [Usage](#usage) • [Documentation](#documentation) • [Deployment](#deployment) • [Contributing](#contributing) • [License](#license)
 
 </div>
 
 ---
 
-## 📖 About
+## About
 
 The Khmer Sign Language Translation System is a web-based application developed as a Capstone Project for Year 3 students in the Data Science specialization and Computer Science department. This system assists communication by translating Khmer sign language gestures into readable text and spoken output through a simple web interface.
 
@@ -27,26 +28,29 @@ The Khmer Sign Language Translation System is a web-based application developed 
 - **User-Friendly Interface**: Responsive, modern web interface accessible through any browser
 - **No Installation Required**: Runs entirely in the browser - just open and use
 
-## ✨ Features
+## Features
 
 ### Core Functionality
 
-- 🎥 **Real-Time Gesture Recognition**: Uses MediaPipe for hand landmark detection
-- 🤖 **AI-Powered Translation**: Deep learning model fine-tuned with Khmer sign language dataset
-- 🔊 **Text-to-Speech Conversion**: Converts translated text into spoken output
-- 📱 **Responsive Design**: Works on desktop, laptop, and tablet devices
-- 🎨 **Modern UI/UX**: Beautiful, accessible interface with smooth animations
+- **Real-Time Gesture Recognition**: Uses MediaPipe for hand landmark detection
+- **AI-Powered Translation**: Deep learning model fine-tuned with Khmer sign language dataset
+- **Text-to-Speech Conversion**: Converts translated text into spoken output
+- **Responsive Design**: Works on desktop, laptop, and tablet devices
+- **Modern UI/UX**: Beautiful, accessible interface with smooth animations
 
 ### Additional Features
 
-- 📚 **Comprehensive Documentation**: Detailed documentation page with system overview
-- 📝 **Contact Form**: Integrated contact form with EmailJS for user inquiries
-- 💬 **Feedback System**: User feedback modal for continuous improvement
-- 📊 **Project Statistics**: Real-time stats and metrics display
-- 🔄 **Changelog**: Version history and update tracking
-- 🌐 **Multi-Page Navigation**: About, Documentation, Changelog, Contact, and Demo pages
+- **Comprehensive Documentation**: Detailed documentation page with system overview
+- **Contact Form**: Integrated contact form with EmailJS for user inquiries
+- **Feedback System**: User feedback modal for continuous improvement
+- **Project Statistics**: Real-time stats and metrics display
+- **Changelog**: Version history and update tracking
+- **Multi-Page Navigation**: About, Documentation, Changelog, Contact, and Demo pages
+- **SEO Optimized**: Complete SEO setup with meta tags, sitemap, and structured data
+- **Production Ready**: Configured for Vercel deployment with optimized build settings
+- **PWA Support**: Web app manifest for installable experience
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -109,7 +113,92 @@ npm run preview
 
 The built files will be in the `dist/` directory, ready for deployment.
 
-## 📖 Usage
+## Deployment
+
+### Vercel Deployment (Recommended)
+
+This project is configured for seamless deployment on Vercel. The live demo is available at:
+
+**[https://khmer-sign-language-translation-sys.vercel.app](https://khmer-sign-language-translation-sys.vercel.app)**
+
+#### Quick Deploy
+
+1. **Via Vercel Dashboard**:
+
+   - Connect your GitHub repository to Vercel
+   - Vercel will auto-detect Vite configuration
+   - Add environment variables (EmailJS credentials)
+   - Deploy automatically on every push
+
+2. **Via Vercel CLI**:
+   ```bash
+   npm i -g vercel
+   vercel login
+   vercel
+   ```
+
+#### Configuration Files
+
+- **`vercel.json`**: Vercel deployment configuration
+
+  - SPA routing setup
+  - Cache headers for static assets
+  - Build optimization
+
+- **`public/robots.txt`**: Search engine crawler instructions
+- **`public/sitemap.xml`**: Site structure for SEO
+- **`public/manifest.json`**: PWA manifest file
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
+
+### Environment Variables
+
+Set these in your Vercel project settings:
+
+```env
+VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
+VITE_EMAILJS_SERVICE_ID=your_service_id_here
+VITE_EMAILJS_TEMPLATE_ID=your_contact_form_template_id_here
+VITE_EMAILJS_FEEDBACK_TEMPLATE_ID=your_feedback_template_id_here
+```
+
+## SEO & Performance
+
+### SEO Features
+
+- **Meta Tags**: Comprehensive meta tags for all pages
+- **Open Graph**: Social media sharing optimization
+- **Twitter Cards**: Enhanced Twitter sharing
+- **Structured Data**: JSON-LD schema markup
+- **Sitemap**: XML sitemap for search engines
+- **Robots.txt**: Search engine crawler instructions
+- **Dynamic SEO**: Page-specific SEO via React component
+- **Canonical URLs**: Prevent duplicate content
+
+### Performance Optimizations
+
+- **Code Splitting**: Automatic code splitting with Vite
+- **Lazy Loading**: Route-based lazy loading for faster initial load
+- **Asset Optimization**: Optimized images (WebP format)
+- **Caching**: Aggressive caching headers for static assets
+- **Bundle Optimization**: Manual chunks for vendor libraries
+
+### SEO Component Usage
+
+Each page uses the SEO component for dynamic meta tags:
+
+```jsx
+import { SEO } from "./components/seo";
+
+<SEO
+  title="Page Title"
+  url="/page-url"
+  keywords="keyword1, keyword2, keyword3"
+  description="Page description"
+/>;
+```
+
+## Usage
 
 ### Using the Translation System
 
@@ -142,7 +231,7 @@ The built files will be in the `dist/` directory, ready for deployment.
 - **Contact**: Get in touch via the contact form
 - **Demo**: Try the translation system
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 src/
@@ -153,6 +242,7 @@ src/
 │
 ├── components/          # Reusable React components
 │   ├── layout/         # Layout components (Header, Footer)
+│   ├── seo/            # SEO components (dynamic meta tags)
 │   ├── ui/             # UI components
 │   └── visuals/        # Visual/decoration components
 │
@@ -201,7 +291,7 @@ src/
 
 For more details, see [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md).
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -225,17 +315,18 @@ For more details, see [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md).
 - **PostCSS** 8.5.6 - CSS processing
 - **Autoprefixer** 10.4.22 - CSS vendor prefixing
 
-## 📚 Documentation
+## Documentation
 
 ### Available Documentation
 
 - **[PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)**: Detailed project organization and structure
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)**: Complete deployment guide for Vercel
 - **[EMAILJS_SETUP.md](./EMAILJS_SETUP.md)**: EmailJS configuration guide for contact forms
 - **[EMAILJS_FEEDBACK_TEMPLATE.md](./EMAILJS_FEEDBACK_TEMPLATE.md)**: Feedback template configuration
 
 ### In-App Documentation
 
-Visit the `/documentation` page for:
+Visit the `/documentation` page or [view online](https://khmer-sign-language-translation-sys.vercel.app/documentation) for:
 
 - System overview and objectives
 - How it works (technical details)
@@ -245,7 +336,11 @@ Visit the `/documentation` page for:
 - Limitations
 - Future work roadmap
 
-## 🤝 Contributing
+### Live Demo
+
+**Try it now**: [https://khmer-sign-language-translation-sys.vercel.app/demo](https://khmer-sign-language-translation-sys.vercel.app/demo)
+
+## Contributing
 
 We welcome contributions! This project is part of academic research and we appreciate any help to improve it.
 
@@ -269,13 +364,13 @@ Please read our [Contributing Guidelines](./CONTRIBUTING.md) for details on:
 
 For detailed instructions, see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-## 📝 License
+## License
 
 This project is licensed under the **ISC License**.
 
 See [LICENSE.md](./LICENSE.md) for the full license text.
 
-## 👥 Team
+## Team
 
 This project is developed by **Capstone Group 15** — Year 3 students in the Data Science specialization and Computer Science department as a Capstone Project.
 
@@ -295,13 +390,14 @@ This project is developed by **Capstone Group 15** — Year 3 students in the Da
 - **Department**: Data Science & Computer Science
 - **Year**: 2025
 
-## 📧 Contact & Support
+## Contact & Support
 
 ### Get in Touch
 
-- **Email**: Contact via the [Contact Form](/contact) on the website
+- **Website**: [https://khmer-sign-language-translation-sys.vercel.app](https://khmer-sign-language-translation-sys.vercel.app)
+- **Contact Form**: [Contact Page](https://khmer-sign-language-translation-sys.vercel.app/contact)
 - **GitHub**: [Phal-Sovandy](https://github.com/Phal-Sovandy)
-- **Discord**: Check the [Documentation Page](/documentation) for community links
+- **Documentation**: [Documentation Page](https://khmer-sign-language-translation-sys.vercel.app/documentation)
 - **Twitter/X**: [@sovandy_phal](https://x.com/sovandy_phal)
 - **LinkedIn**: [Sovandy Phal](https://www.linkedin.com/in/sovandy-phal-382069331/)
 
@@ -313,9 +409,9 @@ Found a bug or have a suggestion? Please [open an issue](https://github.com/Phal
 
 - Check the [Documentation](./PROJECT_STRUCTURE.md) first
 - Browse existing [Issues](https://github.com/Phal-Sovandy/sign-language-translation-system-web/issues)
-- Contact us via the [Contact Form](/contact) on the website
+- Contact us via the [Contact Form](https://khmer-sign-language-translation-sys.vercel.app/contact) on the website
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 ### Technologies & Libraries
 
@@ -337,19 +433,15 @@ Found a bug or have a suggestion? Please [open an issue](https://github.com/Phal
 - Beta testers and early users
 - Open-source community contributors
 
-## 📊 Project Status
+## Project Status
 
 **Current Version**: 0.1.0 (Beta)
 
 ### Development Status
 
-- ✅ Web interface
-- ✅ Documentation
-- ✅ Contact and feedback systems
-- 🚧 Core translation functionality (in progress)
-- 🚧 Mobile optimization (planned)
-- 🚧 Offline functionality (planned)
-- 🚧 Expanded gesture vocabulary (planned)
+- **Completed**: Web interface, Documentation, Contact and feedback systems, Production deployment (Vercel), SEO optimization, PWA support
+- **In Progress**: Core translation functionality
+- **Planned**: Mobile optimization, Offline functionality, Expanded gesture vocabulary
 
 ### Roadmap
 
@@ -364,11 +456,11 @@ See the [Documentation Page](./src/pages/DocumentationPage.jsx) for detailed fut
 - Phase 7: Reverse Translation (Text to Sign)
 - Phase 8: Multi-language Support
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 This system is not developed entirely from original code. It utilizes a pre-trained machine learning model provided by third-party sources, which has been fine-tuned, retrained, and adapted using a project-specific dataset to suit the scope, objectives, and experimental design of this academic work. The selection of such models is part of the learning process and does not indicate proprietary ownership of the base architecture.
 
-## 📈 Statistics
+## Statistics
 
 - **Supported Gestures**: 120+ Khmer sign language signs
 - **Model Accuracy**: Continuously improving
@@ -381,6 +473,6 @@ This system is not developed entirely from original code. It utilizes a pre-trai
 
 **Made with ❤️ for the Khmer Sign Language Community**
 
-[⭐ Star us on GitHub](https://github.com/Phal-Sovandy/sign-language-translation-system-web) • [📖 Documentation](./PROJECT_STRUCTURE.md) • [🐛 Report Bug](https://github.com/Phal-Sovandy/sign-language-translation-system-web/issues) • [💡 Request Feature](https://github.com/Phal-Sovandy/sign-language-translation-system-web/issues)
+[Live Demo](https://khmer-sign-language-translation-sys.vercel.app) • [Star us on GitHub](https://github.com/Phal-Sovandy/sign-language-translation-system-web) • [Documentation](./PROJECT_STRUCTURE.md) • [Report Bug](https://github.com/Phal-Sovandy/sign-language-translation-system-web/issues) • [Request Feature](https://github.com/Phal-Sovandy/sign-language-translation-system-web/issues)
 
 </div>

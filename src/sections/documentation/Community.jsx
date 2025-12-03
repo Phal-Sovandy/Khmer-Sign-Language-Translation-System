@@ -64,7 +64,7 @@ export const Community = React.memo(() => {
             className: "w-6 h-6",
           })
         : null,
-      href: "https://github.com/Phal-Sovandy/Khmer-Sign-Language-Translation-System-Web",
+      href: "https://github.com/Phal-Sovandy/Khmer-Sign-Language-Translation-System",
     },
     {
       title: "Discord",

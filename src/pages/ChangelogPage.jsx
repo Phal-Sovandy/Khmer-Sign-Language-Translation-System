@@ -4,6 +4,7 @@ import Footer from "../components/layout/Footer";
 import { changelogs, socialLinks } from "../config";
 import { getRelativeTime, formatDate } from "../utils/date";
 import { scrollToElement } from "../utils/scroll";
+import { SEO } from "../components/seo";
 
 // Scroll to version helper
 function scrollToVersion(versionId) {
@@ -133,7 +134,8 @@ export default function ChangelogPage() {
 
   // Visit Repository Button Component
   const VisitRepositoryButton = ({ isMobile = false }) => {
-    const githubLink = socialLinks.find((link) => link.name === "GitHub");
+    const githubLink =
+      "https://github.com/Phal-Sovandy/Khmer-Sign-Language-Translation-System";
     const repositoryUrl = githubLink?.href || "#";
 
     return (
@@ -155,6 +157,11 @@ export default function ChangelogPage() {
 
   return (
     <div className="min-h-screen bg-brand-background overflow-x-clip">
+      <SEO
+        title="Changelog"
+        url="/changelog"
+        keywords="changelog, version history, updates, release notes, what's new, KSLTS updates, feature updates, bug fixes, version changelog, project updates"
+      />
       <Header showDemoButton={false} customButton={<VisitRepositoryButton />} />
 
       <main className="pt-28 pb-16">

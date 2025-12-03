@@ -12,10 +12,15 @@ import FeedbackSection from "./sections/feedback";
 import ContactSection from "./sections/contact";
 import FAQSection from "./sections/faq";
 import Footer from "./components/layout/Footer";
+import { SEO } from "./components/seo";
 
 function App() {
   return (
     <div className="relative min-h-screen bg-brand-background text-white">
+      <SEO
+        url="/"
+        keywords="sign language, Khmer sign language, gesture recognition, AI translation, accessibility, real-time translation, computer vision, machine learning, Cambodia, deaf community, KSLTS, sign language translator, webcam translation, text-to-speech, assistive technology"
+      />
       <BackgroundGrid />
       <Header showDemoButton={true} />
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[95vw] flex-col px-6 pb-16 pt-20 lg:px-20">

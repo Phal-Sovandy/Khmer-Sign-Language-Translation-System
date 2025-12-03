@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://khmer-sign-language-translation-sys.vercel.app/sitemap.xml
+
+# Disallow admin or private areas if any
+# Disallow: /admin

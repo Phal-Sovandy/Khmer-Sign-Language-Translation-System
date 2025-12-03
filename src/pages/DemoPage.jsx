@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { SimpleTooltip } from "../components/ui/Tooltip";
+import { SEO } from "../components/seo";
 
 // Default settings values
 const DEFAULT_SETTINGS = {
@@ -680,6 +681,11 @@ export default function DemoPage() {
 
   return (
     <div className="min-h-screen bg-brand-background overflow-x-clip">
+      <SEO
+        title="Demo"
+        url="/demo"
+        keywords="sign language demo, try sign language translator, real-time gesture recognition, webcam translation, test sign language, live demo, gesture detection, Khmer sign language demo, interactive translator, sign language test"
+      />
       {/* Header */}
       <Header showDemoButton={false} />
 

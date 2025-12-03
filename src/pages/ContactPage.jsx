@@ -4,6 +4,7 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { socialLinks } from "../config";
 import { emailjsConfig, validateEmailjsConfig } from "../config/emailjs";
+import { SEO } from "../components/seo";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -94,6 +95,11 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-brand-background relative overflow-hidden">
+      <SEO
+        title="Contact"
+        url="/contact"
+        keywords="contact KSLTS, support, help, inquiry, feedback, get in touch, sign language support, technical support, contact form, reach out"
+      />
       <Header showDemoButton={false} />
 
       <main className="pt-28 pb-16 relative z-10">
