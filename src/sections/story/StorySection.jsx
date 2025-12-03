@@ -19,6 +19,8 @@ export default function StorySection() {
           <div className="absolute inset-8 rounded-[32px] bg-[radial-gradient(circle_at_center,rgba(47,107,255,0.3),transparent_70%)] blur-3xl"></div>
           <MediaWrapper
             src={handReach}
+            eager={true}
+            fetchPriority="high"
             alt="Hand demonstrating sign language"
             className="relative md:left-[50px] z-10 mx-auto w-full max-w-2xl object-contain"
           />
