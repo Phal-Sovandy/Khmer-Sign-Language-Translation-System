@@ -26,7 +26,7 @@ function App() {
       </div>
       <div className="relative -mt-24">
         {/* Gradient overlay to blend MotionSection with background */}
-        <div className="absolute inset-x-0 top-[90] z-30 pointer-events-none">
+        <div className="absolute inset-x-0 top-0 z-30 pointer-events-none">
           <div className="h-68 bg-linear-to-b from-brand-background via-brand-background/90 to-brand-background/0"></div>
           {/* <div className="h-64 -mt-24 bg-linear-to-b from-brand-background/40 via-brand-background/15 to-transparent"></div> */}
         </div>
