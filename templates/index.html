@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hand Gesture Prediction Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f5f5f5;
+    }
+    .video-container {
+      position: relative;
+      display: inline-block;
+    }
+    video {
+      border: 2px solid #333;
+      border-radius: 8px;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hand Gesture Recognition</h1>
+  <div class="video-container">
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="overlay" width="640" height="480"></canvas>
+  </div>
+
+  <script>
+  const video = document.getElementById('video');
+  const overlay = document.getElementById('overlay');
+  const ctx = overlay.getContext('2d');
+
+  navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => { video.srcObject = stream; })
+        .catch(err => console.error("Error accessing webcam:", err));
+        async function loop() {
+    await captureAndPredict();
+    requestAnimationFrame(loop);
+    }
+    loop();
+
+  async function captureAndPredict() {
+    if (video.videoWidth === 0 || video.videoHeight === 0) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const tempCtx = canvas.getContext('2d');
+    tempCtx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const imageData = canvas.toDataURL('image/jpeg');
+
+    try {
+      const response = await fetch('/predict_image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: imageData })
+      });
+
+      const result = await response.json();
+
+      // Clear overlay
+      ctx.clearRect(0, 0, overlay.width, overlay.height);
+
+      if (!result.error) {
+        // Draw label
+        ctx.font = "24px Arial";
+        ctx.fillStyle = "red";
+        ctx.fillText(`${result.label} (${result.confidence.toFixed(1)}%)`, 20, 40);
+
+        // Draw landmarks
+        if (result.landmarks) {
+          ctx.fillStyle = "blue";
+          result.landmarks.forEach(lm => {
+            const x = lm.x * overlay.width;
+            const y = lm.y * overlay.height;
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, 2 * Math.PI);
+            ctx.fill();
+          });
+
+          // Optionally connect landmarks with lines (like MediaPipe)
+          ctx.strokeStyle = "green";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          result.landmarks.forEach((lm, idx) => {
+            const x = lm.x * overlay.width;
+            const y = lm.y * overlay.height;
+            if (idx === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.stroke();
+        }
+      } else {
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "gray";
+        ctx.fillText("No hand detected", 20, 40);
+      }
+    } catch (err) {
+      console.error("Prediction error:", err);
+    }
+  }
+
+  setInterval(captureAndPredict, 100);
+</script>
+
+</body>
+</html>
