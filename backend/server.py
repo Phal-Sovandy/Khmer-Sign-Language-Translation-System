@@ -1,4 +1,5 @@
-from flask import Flask, render_template, Response, request
+# server_khmer.py
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import cv2
 import torch
 import torch.nn as nn
@@ -7,14 +8,12 @@ import mediapipe as mp
 from pathlib import Path
 import base64
 from flask_cors import CORS
+import os
 
 # -------------------------
 # Flask app + CORS
 # -------------------------
 app = Flask(__name__)
-# Allow both localhost and 127.0.0.1 origins (your HTML test page)
-from flask_cors import CORS
-
 CORS(app, resources={r"/*": {
     "origins": [
         "http://127.0.0.1:5500",
@@ -28,21 +27,20 @@ CORS(app, resources={r"/*": {
     ]
 }})
 
-
 # -------------------------
 # Config
 # -------------------------
-MODEL_PATH = Path(__file__).parent / "model" / "model_0.pth"
+MODEL_PATH = Path("./model/model_epoch9_val0.8790.pth")
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # -------------------------
-# LandmarkNet model
+# LandmarkNet model (2-hand)
 # -------------------------
 class LandmarkNet(nn.Module):
     def __init__(self, num_classes):
         super().__init__()
         self.fc = nn.Sequential(
-            nn.Linear(42, 128),
+            nn.Linear(84, 128),  # 2 hands x 21 landmarks x 2 coords
             nn.ReLU(),
             nn.Dropout(0.3),
             nn.Linear(128, 64),
@@ -64,7 +62,7 @@ num_classes = len(class_names)
 model = LandmarkNet(num_classes).to(DEVICE)
 model.load_state_dict(checkpoint["model_state_dict"])
 model.eval()
-print("✅ LandmarkNet loaded")
+print("✅ Model loaded")
 
 # -------------------------
 # Mediapipe Hands
@@ -78,23 +76,30 @@ hands_detector = mp_hands.Hands(
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5
 )
+print("✅ Mediapipe initialized")
 
 # -------------------------
 # Prediction functions
 # -------------------------
-def extract_and_normalize_landmarks(hand_landmarks):
-    xs = np.array([lm.x for lm in hand_landmarks.landmark])
-    ys = np.array([lm.y for lm in hand_landmarks.landmark])
+def extract_landmarks(hand):
+    xs = np.array([lm.x for lm in hand.landmark])
+    ys = np.array([lm.y for lm in hand.landmark])
     xs = (xs - xs.mean()) / (xs.std() + 1e-6)
     ys = (ys - ys.mean()) / (ys.std() + 1e-6)
-    features = np.concatenate([xs, ys]).astype(np.float32)
-    return torch.tensor(features).unsqueeze(0).to(DEVICE)
+    return np.concatenate([xs, ys]).astype(np.float32)
 
-def predict_hand(hand_landmarks):
-    features = extract_and_normalize_landmarks(hand_landmarks)
+def get_two_hand_features(hands_list):
+    hands_list = hands_list[:2]  # max 2 hands
+    features = [extract_landmarks(h) for h in hands_list]
+    while len(features) < 2:
+        features.append(np.zeros(42, dtype=np.float32))
+    return torch.tensor(np.concatenate(features)[None, :], dtype=torch.float32).to(DEVICE)
+
+def predict(hands_list):
+    x = get_two_hand_features(hands_list)
     with torch.no_grad():
-        output = model(features)
-        probs = torch.nn.functional.softmax(output, dim=1)[0]
+        out = model(x)
+        probs = torch.nn.functional.softmax(out, dim=1)[0]
         top_idx = torch.argmax(probs).item()
         return class_names[top_idx], probs[top_idx].item() * 100
 
@@ -107,34 +112,69 @@ def index():
 
 @app.route('/predict_image', methods=['POST'])
 def predict_image():
-    data = request.get_json()
-    image_data = data['image'].split(",")[1]
-    image_bytes = base64.b64decode(image_data)
+    try:
+        data = request.get_json()
+        image_data = data['image'].split(",")[1]
+        image_bytes = base64.b64decode(image_data)
+        nparr = np.frombuffer(image_bytes, np.uint8)
+        frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        if frame is None:
+            return {"error": "Failed to decode image"}
 
-    # Convert to OpenCV image
-    nparr = np.frombuffer(image_bytes, np.uint8)
-    frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = hands_detector.process(frame_rgb)
 
-    # Run MediaPipe hand detection
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    results = hands_detector.process(frame_rgb)
+        if results.multi_hand_landmarks:
+            hands_output = []
 
-    if results.multi_hand_landmarks:
-        hand_landmarks = results.multi_hand_landmarks[0]
-        label, conf = predict_hand(hand_landmarks)
+            # Extract landmarks for each hand
+            for idx, hand_landmarks in enumerate(results.multi_hand_landmarks):
+                landmarks = [{"x": lm.x, "y": lm.y} for lm in hand_landmarks.landmark]
+                hand_label = "Left"
+                if results.multi_handedness:
+                    hand_label = results.multi_handedness[idx].classification[0].label
+                hands_output.append({
+                    "label": hand_label,   # Left / Right
+                    "landmarks": landmarks
+                })
 
-        # Collect normalized landmark coordinates
-        landmarks = []
-        for lm in hand_landmarks.landmark:
-            landmarks.append({"x": lm.x, "y": lm.y})
+            # Predict gesture using all detected hands together
+            gesture_label, gesture_conf = predict(results.multi_hand_landmarks)
 
-        return {
-            "label": label,
-            "confidence": conf,
-            "landmarks": landmarks
-        }
-    else:
-        return {"error": "No hand detected"}
+            return {
+                "hands": hands_output,
+                "class": gesture_label,
+                "confidence": gesture_conf
+            }
+
+        else:
+            return {"error": "No hand detected"}
+
+    except Exception as e:
+        return {"error": str(e)}
+
+
+
+
+IMAGE_FOLDER = r"D:/Year 3/Capstone Project/Test_Sign/sample"  # note raw string r""
+
+@app.route("/list_images")
+def list_images():
+    try:
+        files = os.listdir(IMAGE_FOLDER)
+    except FileNotFoundError:
+        return jsonify([])
+
+    # Only filenames, return URL paths
+    images = [f"/images/{f}" for f in files
+              if f.lower().endswith((".jpg", ".jpeg", ".png", ".gif"))]
+
+    return jsonify(images)
+
+@app.route("/images/<filename>")
+def serve_image(filename):
+    # Use safe join to avoid errors with spaces
+    return send_from_directory(IMAGE_FOLDER, filename, as_attachment=False)
 
 
 # -------------------------

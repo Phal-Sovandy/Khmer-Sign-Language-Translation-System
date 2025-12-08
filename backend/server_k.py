@@ -29,7 +29,7 @@ CORS(app, resources={r"/*": {
 # -------------------------
 # Config
 # -------------------------
-MODEL_PATH = Path("./model/model_epoch9_val0.7953.pth")
+MODEL_PATH = Path("./model/model_epoch10_val0.8128.pth")
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # -------------------------
@@ -102,23 +102,7 @@ def predict(hands_list):
         top_idx = torch.argmax(probs).item()
         return class_names[top_idx], probs[top_idx].item() * 100
 
-SET_HAND = [None, None]
 
-def update_set_hand(new_hand, SET_HAND):
-    SET_HAND[1] = SET_HAND[0]
-    SET_HAND[0] = new_hand
-
-def return_text(set_hand):
-    if set_hand[0] == "form_a":
-        return "form_a"
-    elif set_hand[0] == "form_b":
-        return "ខ្ញុំសុខសប្បាយជាទេ!"
-    elif set_hand[0] == "form_c":
-        return "ជម្រាបសួរ"
-    elif set_hand[0] == "form_d":
-        return "ជម្រាបលា" if set_hand[1] == "form_c" else "form_d"
-    else:
-        return str(set_hand[0])
 
 
 # -------------------------
@@ -155,6 +139,8 @@ def predict_image():
             # label = return_text(SET_HAND)
 
             # Take **first hand** landmarks for drawing in JS
+
+
             hand_landmarks = results.multi_hand_landmarks[0]
             landmarks = [{"x": lm.x, "y": lm.y} for lm in hand_landmarks.landmark]
 
