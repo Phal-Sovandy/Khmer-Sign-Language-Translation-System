@@ -179,7 +179,7 @@ export function DetectedTextSection({
             <p className="text-white/80 font-khmer text-sm leading-relaxed">
               {detectedTextArray
                 .map((item) => item.split(" (")[0]) // Extract labels only for display
-                .join("-")}
+                .join("")}
             </p>
           </div>
         ) : !errorMessage && !pendingText && !latestAcceptedText ? (

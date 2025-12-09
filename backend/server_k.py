@@ -7,6 +7,7 @@ import numpy as np
 import mediapipe as mp
 from pathlib import Path
 import base64
+import json
 from flask_cors import CORS
 
 # -------------------------
@@ -29,8 +30,27 @@ CORS(app, resources={r"/*": {
 # -------------------------
 # Config
 # -------------------------
-MODEL_PATH = Path("./model/model_epoch10_val0.8128.pth")
+MODEL_PATH = Path("./model/model_epoch10_val0.8827.pth")
+CONVERTS_PATH = Path("./converts.json")
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# -------------------------
+# Load converts.json
+# -------------------------
+with open(CONVERTS_PATH, 'r', encoding='utf-8') as f:
+    converts = json.load(f)
+
+# Create reverse mapping: form_name -> Khmer text
+form_to_khmer = {}
+for khmer_text, form_list in converts.items():
+    for form_name in form_list:
+        if form_name not in form_to_khmer:
+            form_to_khmer[form_name] = khmer_text
+# print(form_to_khmer)
+
+def convert_label(label):
+    """Convert form name to Khmer text using converts.json"""
+    return form_to_khmer.get(label, label)
 
 # -------------------------
 # LandmarkNet model (2-hand)
@@ -132,6 +152,8 @@ def predict_image():
             # Predict using up to 2 hands
             label, conf = predict(results.multi_hand_landmarks)
 
+            # Convert label using converts.json
+            label = convert_label(label)
         
             # if label != SET_HAND[0]:
             #     update_set_hand(label, SET_HAND)
@@ -139,8 +161,6 @@ def predict_image():
             # label = return_text(SET_HAND)
 
             # Take **first hand** landmarks for drawing in JS
-
-
             hand_landmarks = results.multi_hand_landmarks[0]
             landmarks = [{"x": lm.x, "y": lm.y} for lm in hand_landmarks.landmark]
 
@@ -150,7 +170,7 @@ def predict_image():
                 "landmarks": landmarks
             }
         else:
-            return {"error": "No hand detected"}
+            return {"error": "No gesture detected"}
 
     except Exception as e:
         return {"error": str(e)}
