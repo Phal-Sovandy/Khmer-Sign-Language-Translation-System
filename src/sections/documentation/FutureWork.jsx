@@ -3,58 +3,72 @@ import React from "react";
 const roadmap = [
   {
     phase: "Phase 1",
-    title: "Expand Gesture Vocabulary",
+    title: "Expansion of Gesture Vocabulary",
     description:
-      "Increase the number of recognizable signs by collecting more gesture samples and retraining the model. Priority will be given to commonly used words and phrases in daily conversation.",
+      "Future work may expand the recognized gesture set from over 40 gestures to more than 100, with an emphasis on commonly used words and phrases. This expansion could also include numerical gestures as well as signs for days of the week and months to improve practical communication coverage.",
     status: "in-progress",
   },
   {
     phase: "Phase 2",
-    title: "Improve Model Accuracy",
+    title: "Improvement of Model Accuracy",
     description:
-      "Enhance recognition accuracy through better data augmentation, model fine-tuning, and handling of edge cases such as varied lighting and hand sizes.",
+      "Model performance can be enhanced through more advanced data augmentation techniques, improved model architectures, and better handling of edge cases such as occlusion, varying lighting conditions, and user variability.",
     status: "planned",
   },
   {
     phase: "Phase 3",
-    title: "Support Dynamic Gestures",
+    title: "Text-to-Speech Output",
     description:
-      "Extend the system to recognize motion-based signs that involve hand movement over time, not just static hand poses.",
+      "Implement text-to-speech functionality to convert translated text into spoken audio. This would enable communication between sign language users and people who do not understand sign language, enhancing accessibility and usability of the system.",
     status: "planned",
   },
   {
     phase: "Phase 4",
-    title: "Add Two-Hand Gesture Recognition",
+    title: "Mobile Optimization",
     description:
-      "Implement support for signs that require both hands, which are common in Khmer sign language for complex expressions.",
+      "Further development may focus on optimizing the application for mobile devices by improving responsive design, implementing touch-friendly controls, and applying mobile-specific performance optimizations to enhance usability on smartphones and tablets.",
     status: "planned",
   },
   {
     phase: "Phase 5",
-    title: "Mobile Application Development",
+    title: "Support for Dynamic Gestures",
     description:
-      "Create a mobile-friendly version or native app to allow users to access the translation system on smartphones and tablets.",
+      "Future enhancements may include the recognition of dynamic, motion-based signs through temporal sequence modeling techniques. This would enable the system to capture gesture transitions and continuous movements, thereby improving recognition of more complex sign language expressions.",
     status: "planned",
   },
   {
     phase: "Phase 6",
-    title: "Offline Functionality",
+    title: "Two-Hand Gesture Recognition",
     description:
-      "Enable the system to work without an internet connection by bundling the model locally using technologies like TensorFlow Lite or ONNX.",
-    status: "research",
+      "The system could be extended to support two-hand gestures by enhancing dual-hand detection capabilities and improving feature extraction methods. This would allow recognition of more complex gestures that require coordinated hand movements.",
+    status: "planned",
   },
   {
     phase: "Phase 7",
-    title: "Reverse Translation (Text to Sign)",
+    title: "Offline Functionality",
     description:
-      "Develop a feature that converts text input into animated sign language visuals, enabling two-way communication between hearing and deaf users.",
+      "Future development may explore offline operation by bundling trained models directly within the application. This could involve converting models to lightweight formats such as TensorFlow Lite or ONNX and implementing Progressive Web App (PWA) support to enable functionality without continuous internet connectivity.",
     status: "research",
   },
   {
     phase: "Phase 8",
+    title: "Reverse Translation (Text-to-Sign)",
+    description:
+      "Future work may include implementing reverse translation functionality that converts textual input into animated sign language representations. This could involve the use of avatar-based sign language displays, enabling two-way communication between sign language users and non-signers.",
+    status: "research",
+  },
+  {
+    phase: "Phase 9",
     title: "Community Contribution Platform",
     description:
-      "Build a platform where users can contribute new gesture samples, suggest corrections, and help expand the dataset collaboratively.",
+      "The system could be extended with a community-driven platform that allows users to submit gesture samples. Such an approach would support collaborative dataset expansion and continuous improvement of model performance through community contributions.",
+    status: "research",
+  },
+  {
+    phase: "Phase 10",
+    title: "Multi-Language Support",
+    description:
+      "Future enhancements may include support for additional sign languages beyond Khmer Sign Language. This would require implementing language-switching functionality and exploring cross-language sign translation to increase the system's applicability across different linguistic contexts.",
     status: "research",
   },
 ];
@@ -84,43 +98,123 @@ export const FutureWork = React.memo(() => {
 
       <p className="text-white/70 font-sans leading-relaxed mb-8">
         The Khmer Sign Language Translation System is a functional prototype
-        that demonstrates real-time gesture recognition, text translation, and
-        speech output. However, there are several areas identified for
-        improvement and expansion to make the system more comprehensive,
-        accurate, and user-friendly. The following are the primary directions
-        for future development:
+        that demonstrates real-time gesture recognition and text translation.
+        However, there are several areas identified for improvement and expansion
+        to make the system more comprehensive, accurate, and user-friendly. The
+        following are the primary directions for future development:
       </p>
 
-      <div className="space-y-4">
-        {roadmap.map((item, index) => (
-          <div
-            key={index}
-            className="p-6 bg-white/5 border border-white/10 rounded-xl"
-          >
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-xs text-brand-primary font-semibold uppercase tracking-wider">
-                    {item.phase}
-                  </span>
-                  <span
-                    className={`text-xs px-2 py-0.5 rounded-full border ${getStatusColor(
-                      item.status
-                    )}`}
-                  >
-                    {item.status.replace("-", " ")}
-                  </span>
+      <div className="space-y-8">
+        <div>
+          <h2 className="font-sans text-xl font-semibold text-white mb-4">
+            Short-Term Enhancements (Next 2 Months)
+          </h2>
+          <div className="space-y-4">
+            {roadmap.slice(0, 3).map((item, index) => (
+              <div
+                key={index}
+                className="p-6 bg-white/5 border border-white/10 rounded-xl"
+              >
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-xs text-brand-primary font-semibold uppercase tracking-wider">
+                        {item.phase}
+                      </span>
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded-full border ${getStatusColor(
+                          item.status
+                        )}`}
+                      >
+                        {item.status.replace("-", " ")}
+                      </span>
+                    </div>
+                    <h3 className="font-sans font-semibold text-white mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/60 text-sm font-sans">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="font-sans font-semibold text-white mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-white/60 text-sm font-sans">
-                  {item.description}
-                </p>
               </div>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        <div>
+          <h2 className="font-sans text-xl font-semibold text-white mb-4">
+            Medium-Term Enhancements (Next 6-12 Months)
+          </h2>
+          <div className="space-y-4">
+            {roadmap.slice(3, 7).map((item, index) => (
+              <div
+                key={index}
+                className="p-6 bg-white/5 border border-white/10 rounded-xl"
+              >
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-xs text-brand-primary font-semibold uppercase tracking-wider">
+                        {item.phase}
+                      </span>
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded-full border ${getStatusColor(
+                          item.status
+                        )}`}
+                      >
+                        {item.status.replace("-", " ")}
+                      </span>
+                    </div>
+                    <h3 className="font-sans font-semibold text-white mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/60 text-sm font-sans">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h2 className="font-sans text-xl font-semibold text-white mb-4">
+            Long-Term Enhancements (Next 6-12 Months)
+          </h2>
+          <div className="space-y-4">
+            {roadmap.slice(7).map((item, index) => (
+              <div
+                key={index}
+                className="p-6 bg-white/5 border border-white/10 rounded-xl"
+              >
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-xs text-brand-primary font-semibold uppercase tracking-wider">
+                        {item.phase}
+                      </span>
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded-full border ${getStatusColor(
+                          item.status
+                        )}`}
+                      >
+                        {item.status.replace("-", " ")}
+                      </span>
+                    </div>
+                    <h3 className="font-sans font-semibold text-white mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/60 text-sm font-sans">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

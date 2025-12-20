@@ -3,8 +3,7 @@ import React from "react";
 const specificObjectives = [
   "To design a real-time gesture recognition system that can detect and interpret Khmer sign language movements using a webcam.",
   "To translate recognized gestures into meaningful and readable text on the screen.",
-  "To convert translated text into speech to support communication with non-sign language users.",
-  "To fine-tune an existing machine learning model using a Khmer sign language dataset in order to improve accuracy and local relevance.",
+  "To fine-tune an existing machine learning model using a Khmer sign language dataset to improve accuracy and local relevance.",
   "To build a responsive and user-friendly web interface that can be accessed easily through a browser.",
   "To optimize the system for smooth performance and reduced delay during real-time translation.",
   "To test the system under different conditions such as lighting and hand position.",
@@ -23,15 +22,21 @@ export const Objectives = React.memo(() => {
       </h1>
 
       <div className="prose prose-invert max-w-none space-y-6 mb-10">
+        <h2 className="font-sans text-xl font-semibold text-white mb-4">
+          Primary Objectives
+        </h2>
         <p className="text-white/70 font-sans leading-relaxed">
-          The primary objective of this project is to design and develop a
-          web-based Khmer Sign Language Translation System that can recognize
-          hand gestures and translate them into readable text and spoken output
-          in real time. The system aims to serve as both a learning tool and a
-          communication aid by combining computer vision and machine learning
-          technologies in an accessible web application.
+          This project's main goal is to create a web-based Khmer Sign Language
+          Translation System that can identify hand gestures and instantly
+          translate them into readable text. By integrating computer vision and
+          machine learning technologies into an accessible web application, the
+          system seeks to function as a communication tool as well as a learning
+          tool.
         </p>
 
+        <h2 className="font-sans text-xl font-semibold text-white mb-4 mt-6">
+          Secondary Objectives
+        </h2>
         <p className="text-white/70 font-sans leading-relaxed">
           This project also focuses on improving the understanding of artificial
           intelligence implementation in real-world scenarios. By working with

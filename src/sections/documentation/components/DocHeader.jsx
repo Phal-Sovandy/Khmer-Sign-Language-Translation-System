@@ -1,12 +1,24 @@
 import React from "react";
 import Header from "../../../components/layout/Header";
+import reportPdf from "../../../assets/Khmer Sign Language Translation System - Report.pdf";
 
 /**
  * Download Docs Button Component
  */
 const DownloadDocsButton = React.memo(({ isMobile = false }) => {
   const handleDownload = () => {
-    window.print();
+    // Create a temporary anchor element to trigger download
+    const link = document.createElement("a");
+    // Use the imported PDF URL from Vite
+    link.href = reportPdf;
+    link.download = "Khmer Sign Language Translation System - Report.pdf";
+    // Append to body, click, and remove
+    document.body.appendChild(link);
+    link.click();
+    // Clean up after a short delay to ensure download starts
+    setTimeout(() => {
+      document.body.removeChild(link);
+    }, 100);
   };
 
   return (

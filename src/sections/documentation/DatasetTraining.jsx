@@ -22,39 +22,22 @@ export const DatasetTraining = React.memo(() => {
       <div className="space-y-8">
         <div>
           <h2 className="font-sans text-xl font-semibold text-white mb-4">
-            Data Description
+            Dataset Statistics
           </h2>
-          <p className="text-white/70 font-sans leading-relaxed mb-4">
-            The dataset consists of recorded gesture samples representing over
-            120 Khmer sign language signs. Each sign is captured from multiple
-            angles and under different lighting conditions to help the model
-            generalize across environments. The dataset includes variations in
-            hand shape, motion, and position to improve the system's robustness.
-          </p>
-          <p className="text-white/70 font-sans leading-relaxed mb-4">
-            For each gesture, video frames are processed to extract hand
-            landmarks using MediaPipe. Instead of training on raw images alone,
-            the system uses landmark coordinates as features, enabling more
-            efficient learning and reduced computational requirements.
-          </p>
-          <p className="text-white/70 font-sans leading-relaxed mb-4">
-            All data was collected, organized, and labeled by the project team.
-            Each class (sign) is labeled carefully to ensure consistency during
-            training and evaluation. Data cleaning and validation steps were
-            performed to remove noisy or incomplete samples.
-          </p>
+          
+          {/* Stats Cards */}
           <div className="grid sm:grid-cols-3 gap-4 mb-8">
             <div className="p-4 bg-white/5 border border-white/10 rounded-xl text-center">
               <span className="block text-3xl font-bold text-white font-heading">
-                100+
+                22,000+
               </span>
               <span className="text-white/60 text-sm font-sans">
-                Training Samples
+                Total Samples
               </span>
             </div>
             <div className="p-4 bg-white/5 border border-white/10 rounded-xl text-center">
               <span className="block text-3xl font-bold text-white font-heading">
-                120+
+                42
               </span>
               <span className="text-white/60 text-sm font-sans">
                 Gesture Classes
@@ -70,6 +53,88 @@ export const DatasetTraining = React.memo(() => {
             </div>
           </div>
 
+          <div className="overflow-x-auto mb-6">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="text-left py-3 px-4 text-white/70 font-sans text-sm font-semibold">Metric</th>
+                  <th className="text-left py-3 px-4 text-white/70 font-sans text-sm font-semibold">Value</th>
+                  <th className="text-left py-3 px-4 text-white/70 font-sans text-sm font-semibold">Description/Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/5">
+                  <td className="py-3 px-4 text-white/70 font-sans text-sm">Total Samples</td>
+                  <td className="py-3 px-4 text-white font-sans text-sm">22,000+</td>
+                  <td className="py-3 px-4 text-white/60 font-sans text-sm">Total gesture samples collected</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-3 px-4 text-white/70 font-sans text-sm">Training Samples</td>
+                  <td className="py-3 px-4 text-white font-sans text-sm">17,850+</td>
+                  <td className="py-3 px-4 text-white/60 font-sans text-sm">90% of total dataset</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-3 px-4 text-white/70 font-sans text-sm">Validation Samples</td>
+                  <td className="py-3 px-4 text-white font-sans text-sm">2,100+</td>
+                  <td className="py-3 px-4 text-white/60 font-sans text-sm">10% of total dataset</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-3 px-4 text-white/70 font-sans text-sm">Number of Gesture Classes</td>
+                  <td className="py-3 px-4 text-white font-sans text-sm">42</td>
+                  <td className="py-3 px-4 text-white/60 font-sans text-sm">Unique Khmer sign language signs</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-3 px-4 text-white/70 font-sans text-sm">Samples per Class (Average)</td>
+                  <td className="py-3 px-4 text-white font-sans text-sm">525+</td>
+                  <td className="py-3 px-4 text-white/60 font-sans text-sm">Average samples per gesture class</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-3 px-4 text-white/70 font-sans text-sm">Number of Contributors</td>
+                  <td className="py-3 px-4 text-white font-sans text-sm">6</td>
+                  <td className="py-3 px-4 text-white/60 font-sans text-sm">Team members involved in data collection</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-3 px-4 text-white/70 font-sans text-sm">Data Format</td>
+                  <td className="py-3 px-4 text-white font-sans text-sm">Hand landmarks</td>
+                  <td className="py-3 px-4 text-white/60 font-sans text-sm">Video frames processed to extract landmarks</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h2 className="font-sans text-xl font-semibold text-white mb-4 mt-6">
+            Data Description
+          </h2>
+          <p className="text-white/70 font-sans leading-relaxed mb-4">
+            Over 38 Khmer sign language signs are represented by recorded gesture
+            samples in the dataset. To aid in the model's environmental
+            generalization, each sign is photographed from several perspectives
+            and in various lighting conditions. To increase the robustness of the
+            system, the dataset contains variations in hand shape, motion, and
+            position.
+          </p>
+          <p className="text-white/70 font-sans leading-relaxed mb-4">
+            For each gesture, video frames are processed to extract hand
+            landmarks using MediaPipe. Instead of training on raw images alone,
+            the system uses landmark coordinates as features, enabling more
+            efficient learning and reduced computational requirements.
+          </p>
+          <p className="text-white/70 font-sans leading-relaxed mb-4">
+            All data was collected, organized, and labeled by the project team.
+            Each class (sign) is labeled carefully to ensure consistency during
+            training and evaluation. Data cleaning and validation steps were
+            performed to remove noisy or incomplete samples (~2,100 samples, 10%
+            were removed during preprocessing).
+          </p>
+          <p className="text-white/70 font-sans leading-relaxed mb-4">
+            To improve model robustness and generalization, data were collected
+            by recording repeated gesture samples from multiple project members.
+            Each participant performed every gesture multiple times, with
+            approximately ten repetitions per gesture, capturing natural
+            variations in hand shape, movement, and execution style. No artificial
+            data augmentation techniques were applied; instead, variability was
+            achieved through repeated real-world recordings.
+          </p>
+
           {/* Dataset Images Collage */}
           <DatasetCollage />
         </div>
@@ -81,41 +146,75 @@ export const DatasetTraining = React.memo(() => {
           <p className="text-white/70 font-sans leading-relaxed mb-4">
             We utilize a fine-tuned deep learning model based on a pre-trained
             architecture. The model was adapted specifically for Khmer sign
-            language recognition through transfer learning techniques.
+            language recognition through transfer learning techniques. The
+            system uses a custom PyTorch neural network called LandmarkNet.
           </p>
+          <div className="p-6 bg-white/5 border border-white/10 rounded-xl mb-4">
+            <h4 className="font-sans font-semibold text-white mb-3">
+              Model Specifications:
+            </h4>
+            <ul className="space-y-2 text-white/70 text-sm font-sans">
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Model File:</strong> model_epoch39_val0.8799.pth
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Validation Accuracy:</strong> 87.99%
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Training Epochs:</strong> 39
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Model Size:</strong> ~1 MB
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Inference Time:</strong> 10-50ms (CPU), 5-20ms (GPU)
+                </span>
+              </li>
+            </ul>
+          </div>
           <div className="p-6 bg-white/5 border border-white/10 rounded-xl">
             <h4 className="font-sans font-semibold text-white mb-3">
-              Key Technologies:
+              Architecture Details:
             </h4>
-            <ul className="grid sm:grid-cols-2 gap-3">
-              {[
-                "MediaPipe Hands",
-                "PyTorch",
-                "Transfer Learning",
-                "Data Augmentation",
-                "Real-time Inference",
-                "Model Optimization",
-              ].map((tech) => (
-                <li
-                  key={tech}
-                  className="flex items-center gap-2 text-white/60 text-sm font-sans"
-                >
-                  <svg
-                    className="w-4 h-4 text-green-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  {tech}
-                </li>
-              ))}
+            <ul className="space-y-2 text-white/70 text-sm font-sans">
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Input Layer:</strong> 84 features (42 per hand × 2 hands)
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Hidden Layer 1:</strong> 128 neurons with ReLU activation and 0.3 dropout
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Hidden Layer 2:</strong> 64 neurons with ReLU activation and 0.2 dropout
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Output Layer:</strong> Number of classes (38 gesture classes)
+                </span>
+              </li>
             </ul>
           </div>
         </div>
@@ -131,17 +230,81 @@ export const DatasetTraining = React.memo(() => {
             into training and validation sets to monitor performance and avoid
             overfitting.
           </p>
+          <div className="p-6 bg-white/5 border border-white/10 rounded-xl mb-4">
+            <h4 className="font-sans font-semibold text-white mb-3">
+              Training Configuration:
+            </h4>
+            <ul className="space-y-2 text-white/70 text-sm font-sans">
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Optimizer:</strong> Adam optimizer with learning rate scheduler
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Loss Function:</strong> Cross-entropy loss function
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Batch Size:</strong> 32
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Training Epochs:</strong> 39 epochs with early stopping
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Dataset Split:</strong> 80% training, 20% validation
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-white/40 mt-0.5">•</span>
+                <span>
+                  <strong className="text-white">Initial Learning Rate:</strong> 0.001 with gradual decay
+                </span>
+              </li>
+            </ul>
+          </div>
           <p className="text-white/70 font-sans leading-relaxed mb-4">
-            During training, data augmentation techniques such as rotation,
-            scaling, and brightness adjustment were applied to increase dataset
-            diversity and improve the model's ability to generalize across
-            different users and environments.
+            During training, both the loss function and accuracy metrics were
+            monitored continuously to ensure effective learning and convergence.
+            The final model was selected based on peak validation accuracy and
+            subsequently evaluated on unseen data to confirm its generalization
+            performance.
           </p>
+          <p className="text-white/70 font-sans leading-relaxed mb-4">
+            Training performance progressed as follows:
+          </p>
+          <ul className="space-y-2 mb-4 text-white/70 text-sm font-sans">
+            <li className="flex items-start gap-2">
+              <span className="text-white/40 mt-0.5">•</span>
+              <span><strong className="text-white">Initial Accuracy (Epoch 1):</strong> Approximately 71.93%</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-white/40 mt-0.5">•</span>
+              <span><strong className="text-white">Epoch 10:</strong> 83.42% accuracy</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-white/40 mt-0.5">•</span>
+              <span><strong className="text-white">Epoch 20:</strong> 85.71% accuracy</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-white/40 mt-0.5">•</span>
+              <span><strong className="text-white">Peak Validation Accuracy (Epoch 39):</strong> 87.99%</span>
+            </li>
+          </ul>
           <p className="text-white/70 font-sans leading-relaxed">
-            Loss functions and accuracy metrics were tracked throughout training
-            to ensure the model was learning effectively. The final model was
-            selected based on validation accuracy and tested on unseen data to
-            confirm reliable performance.
+            This evaluation confirms that the model achieves reliable performance
+            in real-time gesture recognition tasks, supporting the overall system
+            objectives.
           </p>
         </div>
 
@@ -160,8 +323,9 @@ export const DatasetTraining = React.memo(() => {
               <span className="text-white/40 mt-0.5">•</span>
               <span>
                 <strong className="text-white">Model Quantization:</strong>{" "}
-                Reducing the precision of model weights to decrease file size
-                and speed up inference without significant loss in accuracy.
+                The precision of model weights was reduced to decrease file size,
+                accelerate inference, and reduce memory footprint for web
+                deployment, without significant loss in classification accuracy.
               </span>
             </li>
             <li className="flex items-start gap-2 text-white/70 font-sans leading-relaxed">
@@ -170,31 +334,37 @@ export const DatasetTraining = React.memo(() => {
                 <strong className="text-white">
                   Lightweight Architecture:
                 </strong>{" "}
-                Using a compact neural network structure optimized for real-time
-                applications on standard hardware.
+                A compact neural network design was adopted, maintaining a minimal
+                number of layers while preserving accuracy. This architecture is
+                optimized for real-time applications and runs efficiently on
+                standard hardware without requiring specialized GPUs.
               </span>
             </li>
             <li className="flex items-start gap-2 text-white/70 font-sans leading-relaxed">
               <span className="text-white/40 mt-0.5">•</span>
               <span>
                 <strong className="text-white">Efficient Preprocessing:</strong>{" "}
-                Streamlining the landmark extraction process to minimize delay
-                between gesture input and model prediction.
+                The hand landmark extraction process was streamlined to minimize
+                the delay between gesture input and model prediction. Optimizations
+                to the MediaPipe integration further enhance processing speed and
+                responsiveness.
               </span>
             </li>
             <li className="flex items-start gap-2 text-white/70 font-sans leading-relaxed">
               <span className="text-white/40 mt-0.5">•</span>
               <span>
                 <strong className="text-white">Batch Processing:</strong>{" "}
-                Handling multiple frames efficiently to maintain consistent
-                performance during continuous gesture recognition.
+                Multiple frames are handled efficiently through batch processing
+                techniques, ensuring consistent performance during continuous
+                gesture recognition and enabling optimized handling of concurrent
+                requests.
               </span>
             </li>
           </ul>
           <p className="text-white/70 font-sans leading-relaxed">
-            These optimizations allow the system to run efficiently in a browser
-            without requiring specialized hardware, making it accessible to a
-            wider range of users.
+            Collectively, these optimizations allow the system to operate smoothly
+            within web browsers, providing real-time gesture recognition accessible
+            to a wide range of users without specialized hardware requirements.
           </p>
         </div>
       </div>

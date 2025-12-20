@@ -37,40 +37,45 @@ export const ProjectOverview = React.memo(() => {
       {/* Content */}
       <div className="prose prose-invert max-w-none space-y-6">
         <p className="text-white/70 font-sans leading-relaxed">
-          The Khmer Sign Language Translation System is a web-based application
-          developed as a Capstone Project for Year 3 students in the Data
-          Science specialization and Computer Science department. The purpose of
-          this system is to assist communication by translating Khmer sign
-          language gestures into readable text and spoken output through a
-          simple web interface.
+          The Khmer Sign Language Translation System is a web-based program
+          created as a capstone project for third-year students in the Computer
+          Science and Data Science departments. By converting Khmer sign language
+          gestures into readable text output via a straightforward web
+          interface, this system aims to facilitate communication.
         </p>
 
         <p className="text-white/70 font-sans leading-relaxed">
-          This project uses computer vision and machine learning techniques to
-          recognize hand gestures in real time. When a user performs a sign in
-          front of a camera, the system detects hand movements using MediaPipe
-          and processes the gesture through a trained deep learning model built
-          with PyTorch. The predicted result is then displayed as text and can
-          be converted into speech to make communication easier with non-sign
-          language users.
+          The system is an example of how artificial intelligence and computer
+          vision technologies can be used practically to solve accessibility
+          issues in the real world. The project shows how technical expertise can
+          be used to develop significant solutions for marginalized communities
+          by fusing machine learning with contemporary web technologies.
         </p>
 
         <p className="text-white/70 font-sans leading-relaxed">
-          Instead of building the model from scratch, this project fine-tunes a
-          pre-trained model with a Khmer sign language dataset prepared by the
-          team. This approach allows the system to better recognize local
-          gestures while reducing development time. The team focuses on data
-          processing, model optimization, and system integration to improve
-          performance and usability.
+          This project uses a Khmer sign language dataset created by the team to
+          refine a pre-trained model rather than creating the model from scratch.
+          This method shortens the development time while improving the system's
+          ability to identify local gestures. To enhance performance and
+          usability, the team concentrates on data processing, model optimization,
+          and system integration.
         </p>
 
         <p className="text-white/70 font-sans leading-relaxed">
-          As this project is still under active development, the system may not
-          always produce perfect translations. Accuracy and coverage are
-          continuously being improved, and more gestures will be added in future
-          updates. The current version demonstrates a functional prototype that
-          shows how artificial intelligence can support accessibility and
-          learning.
+          The system recognizes hand gestures in real time using computer
+          vision and machine learning techniques. When a user signs in front of
+          a camera, MediaPipe is used by the system to detect hand movements,
+          and PyTorch is used to build a trained deep learning model to process
+          the gesture. To facilitate communication with non-sign language users,
+          the anticipated outcome is then shown as text.
+        </p>
+
+        <p className="text-white/70 font-sans leading-relaxed">
+          The system might not always generate flawless translations because
+          this project is still in active development. Future updates will
+          include additional gestures, and accuracy and coverage are constantly
+          being enhanced. The current version shows a working prototype that
+          illustrates how AI can enhance learning and accessibility.
         </p>
       </div>
     </section>

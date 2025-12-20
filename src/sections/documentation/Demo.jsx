@@ -15,8 +15,7 @@ export const Demo = React.memo(() => {
         The Demo section provides users with a practical, interactive way to
         experience the Khmer Sign Language Translation System in action. This
         section is designed to showcase how gestures are translated into text
-        and speech in real time, highlighting the system's capabilities and user
-        interface.
+        in real time, highlighting the system's capabilities and user interface.
       </p>
 
       <p className="text-white/70 font-sans leading-relaxed mb-8">
@@ -132,21 +131,6 @@ export const Demo = React.memo(() => {
               </span>
             </div>
           </li>
-          <li className="flex items-start gap-3">
-            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-primary/20 text-brand-primary text-sm font-semibold flex items-center justify-center">
-              5
-            </span>
-            <div>
-              <span className="text-white font-medium">
-                Hear Speech Output:
-              </span>
-              <span className="text-white/70 font-sans">
-                {" "}
-                For supported gestures, the text is also converted to speech,
-                allowing interaction with non-sign language users.
-              </span>
-            </div>
-          </li>
         </ol>
       </div>
 
@@ -198,13 +182,6 @@ export const Demo = React.memo(() => {
             <span>
               <strong className="text-white">Multi-Gesture Support:</strong>{" "}
               Recognizes over 120 Khmer signs.
-            </span>
-          </li>
-          <li className="flex items-start gap-2 text-white/70 font-sans">
-            <span className="text-white/40 mt-0.5">•</span>
-            <span>
-              <strong className="text-white">Speech Output:</strong> Converts
-              text into spoken audio for accessibility.
             </span>
           </li>
           <li className="flex items-start gap-2 text-white/70 font-sans">

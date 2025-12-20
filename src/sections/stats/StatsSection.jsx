@@ -14,7 +14,7 @@ export default function StatsSection() {
         <div className="flex flex-wrap items-center gap-15 lg:gap-40 justify-center">
           <div className="flex flex-col items-start text-center">
             <span className="text-6xl md:text-7xl font-bold text-white drop-shadow-lg font-heading">
-              95% <span className="text-brand-primary">+</span>
+              87.99 <span className="text-brand-primary">%</span>
             </span>
             <span className="mt-2 text-white/60 tracking-wide text-left font-sans">
               Accuracy
@@ -22,7 +22,7 @@ export default function StatsSection() {
           </div>
           <div className="flex flex-col items-start text-center">
             <span className="text-6xl md:text-7xl font-bold text-white drop-shadow-lg font-heading">
-              &lt; 0.2s
+              &lt; 1<span className="text-brand-primary">s</span>
             </span>
             <span className="mt-2 text-white/60 tracking-wide font-sans">
               Processing Speed
@@ -30,7 +30,7 @@ export default function StatsSection() {
           </div>
           <div className="flex flex-col items-start text-center">
             <span className="text-6xl md:text-7xl font-bold text-white drop-shadow-lg font-heading">
-              120 <span className="text-brand-primary">+</span>
+              38 <span className="text-brand-primary"></span>
             </span>
             <span className="mt-2 text-white/60 tracking-wide font-sans">
               Supported Khmer Sign

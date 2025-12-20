@@ -24,7 +24,6 @@ const requirementSections = [
       "A computer or laptop with a working webcam for capturing sign language gestures.",
       "Minimum 4 GB of RAM to allow smooth browser operation during real-time processing.",
       "A modern processor capable of handling video input without lag.",
-      "Microphone and speakers or headphones for speech output functionality.",
       "Stable lighting conditions in the user's environment to improve hand detection accuracy.",
     ],
   },
