@@ -1,7 +1,7 @@
 export const team = [
     {
       name: "Vann Vat",
-      role: "Team Leader & Data Engineer",
+      role: "Team Leader & ML Engineer",
       bio: "Passionate leader with expertise in data engineering and project management. Dedicated to building accessible technology that bridges communication gaps in the deaf community.",
       socials: {
         twitter: "#",
@@ -57,8 +57,8 @@ export const team = [
     },
     {
       name: "Mony Meakputsoktheara",
-      role: "Machine Learning Engineer",
-      bio: "Skilled ML engineer specializing in computer vision and gesture recognition. Driven to develop intelligent systems that can understand and translate human movements.",
+      role: "Data Engineer",
+      bio: "Data engineering learner with experience in ETL, database design, and automating data workflows.",
       socials: {
         twitter: "#",
         linkedin: "#",

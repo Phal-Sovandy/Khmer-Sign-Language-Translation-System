@@ -12,14 +12,22 @@ function scrollToSection(sectionId) {
 /**
  * Desktop Sidebar Navigation Component
  */
-export const Sidebar = React.memo(({ activeSection }) => {
+export const Sidebar = React.memo(({ activeSection, onSectionClick }) => {
+  const handleClick = (sectionId) => {
+    scrollToSection(sectionId);
+    // Update active section immediately for better UX
+    if (onSectionClick) {
+      onSectionClick(sectionId);
+    }
+  };
+
   return (
     <aside className="w-64 flex-shrink-0 hidden lg:block">
       <nav className="sticky top-28 space-y-1">
         {sections.map((section) => (
           <button
             key={section.id}
-            onClick={() => scrollToSection(section.id)}
+            onClick={() => handleClick(section.id)}
             className={`block w-full text-left px-4 py-2 text-sm font-sans transition-colors rounded-lg ${
               activeSection === section.id
                 ? "text-white font-medium bg-white/5"

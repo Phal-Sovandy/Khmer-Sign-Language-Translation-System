@@ -13,6 +13,7 @@ import {
   HowItWorks,
   DatasetTraining,
   Demo,
+  API,
   Limitations,
   FutureWork,
   Community,
@@ -29,26 +30,107 @@ export default function DocumentationPage() {
   // Track active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      const sectionElements = sections.map((section) => ({
-        id: section.id,
-        element: document.getElementById(section.id),
-      }));
+      const scrollPosition = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const offset = 250; // Offset for header + buffer
 
-      const scrollPosition = window.scrollY + 150; // Offset for header
+      const sectionElements = sections
+        .map((section) => {
+          const element = document.getElementById(section.id);
+          if (!element) return null;
+          
+          const rect = element.getBoundingClientRect();
+          const elementTop = rect.top + scrollPosition;
+          const elementBottom = elementTop + rect.height;
+          
+          return {
+            id: section.id,
+            element,
+            top: elementTop,
+            bottom: elementBottom,
+            rect,
+          };
+        })
+        .filter(Boolean);
 
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const { id, element } = sectionElements[i];
-        if (element && element.offsetTop <= scrollPosition) {
-          setActiveSection(id);
-          break;
+      if (sectionElements.length === 0) return;
+
+      // If at the top of the page, activate first section
+      if (scrollPosition < 50) {
+        setActiveSection(sectionElements[0].id);
+        return;
+      }
+
+      // Find the section that is currently most visible in the viewport
+      let activeId = sectionElements[0].id;
+      let maxVisible = 0;
+
+      for (const section of sectionElements) {
+        const { rect, top, bottom } = section;
+        
+        // Calculate how much of the section is visible in the viewport
+        const visibleTop = Math.max(0, -rect.top);
+        const visibleBottom = Math.min(rect.height, viewportHeight - rect.top);
+        const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+        const visibleRatio = visibleHeight / rect.height;
+
+        // Check if section is in the viewport with offset
+        if (rect.top <= offset && rect.bottom >= 0) {
+          // If this section is more visible than the current active one, make it active
+          if (visibleRatio > maxVisible || (rect.top <= offset && top <= scrollPosition + offset)) {
+            maxVisible = visibleRatio;
+            activeId = section.id;
+          }
         }
+      }
+
+      // Fallback: find the section we've scrolled past
+      if (activeId === sectionElements[0].id) {
+        for (let i = sectionElements.length - 1; i >= 0; i--) {
+          const { id, top } = sectionElements[i];
+          if (top <= scrollPosition + offset) {
+            activeId = id;
+            break;
+          }
+        }
+      }
+
+      // If scrolled to bottom, activate last section
+      const lastSection = sectionElements[sectionElements.length - 1];
+      if (
+        scrollPosition + viewportHeight >=
+        document.documentElement.scrollHeight - 50
+      ) {
+        activeId = lastSection.id;
+      }
+
+      setActiveSection(activeId);
+    };
+
+    // Initial check with a small delay to ensure elements are rendered
+    const timeoutId = setTimeout(() => {
+      handleScroll();
+    }, 150);
+
+    // Use requestAnimationFrame for smoother updates
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Set initial active section
+    window.addEventListener("scroll", onScroll, { passive: true });
+    handleScroll(); // Also call immediately
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
@@ -85,13 +167,17 @@ export default function DocumentationPage() {
 
           <div className="flex gap-12">
             {/* Desktop Sidebar */}
-            <Sidebar activeSection={activeSection} />
+            <Sidebar
+              activeSection={activeSection}
+              onSectionClick={setActiveSection}
+            />
 
             {/* Mobile Sidebar */}
             <MobileSidebar
               activeSection={activeSection}
               isOpen={isMobileSidebarOpen}
               onClose={() => setIsMobileSidebarOpen(false)}
+              onSectionClick={setActiveSection}
             />
 
             {/* Main Content - All sections rendered sequentially */}
@@ -102,6 +188,7 @@ export default function DocumentationPage() {
               <HowItWorks />
               <DatasetTraining />
               <Demo />
+              <API />
               <Limitations />
               <FutureWork />
               <Community />

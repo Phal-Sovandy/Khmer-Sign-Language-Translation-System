@@ -8,6 +8,7 @@ export const sections = [
   { id: "how-it-works", label: "How It Works" },
   { id: "dataset-training", label: "Dataset & Training" },
   { id: "demo", label: "Demo" },
+  { id: "api", label: "API" },
   { id: "limitations", label: "Limitations" },
   { id: "future-work", label: "Future Work" },
   { id: "community", label: "Community" },

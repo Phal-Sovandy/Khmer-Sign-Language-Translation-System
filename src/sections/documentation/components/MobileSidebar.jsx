@@ -13,8 +13,17 @@ function scrollToSection(sectionId) {
  * Mobile Sidebar Navigation Component
  */
 export const MobileSidebar = React.memo(
-  ({ activeSection, isOpen, onClose }) => {
+  ({ activeSection, isOpen, onClose, onSectionClick }) => {
     if (!isOpen) return null;
+
+    const handleClick = (sectionId) => {
+      scrollToSection(sectionId);
+      // Update active section immediately for better UX
+      if (onSectionClick) {
+        onSectionClick(sectionId);
+      }
+      onClose();
+    };
 
     return (
       <div className="fixed inset-0 z-50 lg:hidden">
@@ -45,10 +54,7 @@ export const MobileSidebar = React.memo(
             {sections.map((section) => (
               <button
                 key={section.id}
-                onClick={() => {
-                  scrollToSection(section.id);
-                  onClose();
-                }}
+                onClick={() => handleClick(section.id)}
                 className={`block w-full text-left px-4 py-2 text-sm font-sans transition-colors rounded-lg ${
                   activeSection === section.id
                     ? "text-white font-medium bg-white/5"

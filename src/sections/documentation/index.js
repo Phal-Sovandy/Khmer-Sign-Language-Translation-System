@@ -4,6 +4,7 @@ export { SystemRequirements } from "./SystemRequirements";
 export { HowItWorks } from "./HowItWorks";
 export { DatasetTraining } from "./DatasetTraining";
 export { Demo } from "./Demo";
+export { API } from "./API";
 export { Limitations } from "./Limitations";
 export { FutureWork } from "./FutureWork";
 export { Community } from "./Community";
