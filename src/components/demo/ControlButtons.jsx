@@ -5,6 +5,7 @@ export function ControlButtons({
   isCameraActive,
   onToggleCamera,
   onOpenSettings,
+  onOpenSampleGestures,
   onSpeak,
   onReset,
   onUndo,
@@ -176,6 +177,25 @@ export function ControlButtons({
           </svg>
         </button>
       </SimpleTooltip>
+
+      {/* Sample Gesture */}
+      <SimpleTooltip content="Sample Gesture" position="bottom">
+        <button
+          onClick={onOpenSampleGestures}
+          className="p-2 rounded-lg bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+        >
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path d="M18 11.5V6a2.5 2.5 0 0 0-5 0v5.5M13 5.5a2.5 2.5 0 0 0-5 0v7.5M8 9.5a2.5 2.5 0 0 0-5 0v1.5a8.5 8.5 0 0 0 8.5 8.5h4.01a6 6 0 0 0 5.09-2.71L21 13.5M3 11a3 3 0 0 1 6 0"></path>
+          </svg>
+        </button>
+      </SimpleTooltip>
+
       {/* Report Issue */}
       <SimpleTooltip content="Report Issue" position="bottom">
         <a

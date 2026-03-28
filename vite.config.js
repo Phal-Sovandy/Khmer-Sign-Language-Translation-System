@@ -4,11 +4,10 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
   optimizeDeps: {
-    exclude: ["@mediapipe/hands", "@mediapipe/drawing_utils"],
-    include: [],
+    exclude: ["@mediapipe/hands", "@mediapipe/camera_utils"],
   },
+  plugins: [react(), tailwindcss()],
   build: {
     rollupOptions: {
       output: {

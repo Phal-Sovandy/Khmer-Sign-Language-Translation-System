@@ -11,6 +11,7 @@ export function DetectedTextSection({
   isCameraActive,
   onToggleCamera,
   onOpenSettings,
+  onOpenSampleGestures,
   onSpeak,
   onReset,
   onUndo,
@@ -47,6 +48,7 @@ export function DetectedTextSection({
           isCameraActive={isCameraActive}
           onToggleCamera={onToggleCamera}
           onOpenSettings={onOpenSettings}
+          onOpenSampleGestures={onOpenSampleGestures}
           onSpeak={onSpeak}
           onReset={onReset}
           onUndo={onUndo}

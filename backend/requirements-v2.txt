@@ -1,0 +1,22 @@
+# Web Framework & CORS
+flask
+flask-cors
+
+# Core Logic & Math
+# NumPy 1.26.4 is the last 1.x release and avoids compatibility errors with MediaPipe.
+numpy==1.26.4
+
+# Machine Learning
+# TensorFlow 2.15.x is recommended for stability with MediaPipe's TFLite requirements.
+tensorflow==2.15.0
+tf-keras
+# Required to load the .h5 model file structure.
+h5py 
+
+# Media Processing
+# MediaPipe 0.10.11 is highly stable for landmark extraction.
+mediapipe==0.10.11
+# Standard version for image handling.
+opencv-python
+# Required if you still use the Khmer font drawing logic on the backend.
+Pillow
