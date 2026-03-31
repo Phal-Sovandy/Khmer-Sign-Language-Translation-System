@@ -137,7 +137,7 @@ Place the model file:
 Run the server:
 
 ```bash
-python server.py
+python server-v2-dynamic.py
 ```
 
 Default port: 3000
@@ -151,7 +151,7 @@ npm install
 npm run dev
 ```
 
-Default port: 5173
+Default port: `5173`
 
 ---
 
