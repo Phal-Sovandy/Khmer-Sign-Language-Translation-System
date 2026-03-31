@@ -11,7 +11,7 @@ import {
 export default function DemoPage() {
   const videoRef = useRef(null);
   const handsRef = useRef(null);
-  const cameraRef = useRef(null);
+  const [isModelLoading, setIsModelLoading] = useState(false);
 
   const detectedTextArrayRef = useRef([]);
   const [detectedTextArray, setDetectedTextArray] = useState(() => {
@@ -37,6 +37,16 @@ export default function DemoPage() {
     } catch {}
     return 70;
   });
+
+  // Auto-speak functionality
+  const [isAutoSpeak, setIsAutoSpeak] = useState(() => {
+    try {
+      const stored = localStorage.getItem("sign-language-demo-settings");
+      if (stored) return JSON.parse(stored)?.autoSpeak || false;
+    } catch {}
+    return false;
+  });
+  const prevLengthRef = useRef(detectedTextArray.length);
 
   // Sync detected text to localStorage
   useEffect(() => {
@@ -178,7 +188,7 @@ export default function DemoPage() {
 
   const handlePredictionResponse = useCallback(
     (data) => {
-      const confidence = data.confidence || 0;
+      const confidence = data.confidence * 100 || 0;
       const label = data.label;
       const newText = `${label} (${confidence.toFixed(1)}%)`;
 
@@ -215,6 +225,7 @@ export default function DemoPage() {
     let running = true;
 
     const loadMediaPipe = async () => {
+      setIsModelLoading(true);
       const { HandLandmarker, FilesetResolver } =
         await import("@mediapipe/tasks-vision");
 
@@ -234,8 +245,8 @@ export default function DemoPage() {
         minHandPresenceConfidence: 0.8,
         minTrackingConfidence: 0.5,
       });
-
       handsRef.current = handLandmarker;
+      setIsModelLoading(false);
 
       const processFrame = () => {
         if (!running || !videoRef.current || !handLandmarker) return;
@@ -287,7 +298,9 @@ export default function DemoPage() {
       }
     };
 
-    loadMediaPipe().catch(console.error);
+    (async () => {
+      await loadMediaPipe();
+    })();
 
     return () => {
       running = false;
@@ -315,6 +328,50 @@ export default function DemoPage() {
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, [toggleCamera]);
+
+  // Auto-speak: speak only the latest detected text
+  useEffect(() => {
+    const prevLength = prevLengthRef.current;
+    prevLengthRef.current = detectedTextArray.length;
+
+    if (!isAutoSpeak || detectedTextArray.length <= prevLength) return;
+
+    const latestText =
+      detectedTextArray[detectedTextArray.length - 1].split(" (")[0];
+    if (!latestText) return;
+
+    const API_KEY = import.meta.env.VITE_GOOGLE_TTS_API_KEY || "";
+    const url = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${API_KEY}`;
+
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        input: { text: latestText },
+        voice: { languageCode: "km-KH", ssmlGender: "FEMALE" },
+        audioConfig: { audioEncoding: "MP3" },
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.audioContent) return;
+        const audioBlob = new Blob(
+          [Uint8Array.from(atob(data.audioContent), (c) => c.charCodeAt(0))],
+          { type: "audio/mp3" },
+        );
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+
+        audio.onplay = () => setIsSpeaking(true);
+        audio.onended = () => {
+          setIsSpeaking(false);
+          URL.revokeObjectURL(audioUrl);
+        };
+
+        audio.play().catch(console.error);
+      })
+      .catch(console.error);
+  }, [isAutoSpeak, detectedTextArray]);
 
   // Cleanup
   useEffect(() => {
@@ -353,6 +410,7 @@ export default function DemoPage() {
                 isCameraActive={isCameraActive}
                 error={cameraError}
                 onRetry={startCamera}
+                isModelLoading={isModelLoading}
               />
             </div>
           </div>

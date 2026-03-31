@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 
-// Buffer size options
-const BUFFER_SIZE_OPTIONS = [3, 5, 10, 15, 20];
-
 // LocalStorage key
 const SETTINGS_STORAGE_KEY = "sign-language-demo-settings";
 
@@ -12,7 +9,6 @@ const DEFAULT_SETTINGS = {
   autoSpeak: false,
   camera: "user",
   voiceGender: "male",
-  bufferSize: 5,
 };
 
 // Load settings from localStorage
@@ -65,10 +61,6 @@ export function SettingsModalSection({
     const settings = loadSettings();
     return settings.voiceGender;
   });
-  const [bufferSize, setBufferSize] = useState(() => {
-    const settings = loadSettings();
-    return settings.bufferSize;
-  });
 
   // Sync sensitivity with confidenceLevel prop
   useEffect(() => {
@@ -85,9 +77,8 @@ export function SettingsModalSection({
       mirrorVideo,
       camera,
       voiceGender,
-      bufferSize,
     });
-  }, [sensitivity, autoSpeak, mirrorVideo, camera, voiceGender, bufferSize]);
+  }, [sensitivity, autoSpeak, mirrorVideo, camera, voiceGender]);
 
   // Add custom slider styles
   useEffect(() => {
@@ -194,7 +185,6 @@ export function SettingsModalSection({
     setAutoSpeak(DEFAULT_SETTINGS.autoSpeak);
     setCamera(DEFAULT_SETTINGS.camera);
     setVoiceGender(DEFAULT_SETTINGS.voiceGender);
-    setBufferSize(DEFAULT_SETTINGS.bufferSize);
     // Update parent confidence level
     if (onConfidenceLevelChange) {
       onConfidenceLevelChange(DEFAULT_SETTINGS.sensitivity);
@@ -421,31 +411,6 @@ export function SettingsModalSection({
                 <span className="text-sm font-sans font-medium">Female</span>
               </button>
             </div>
-          </div>
-
-          {/* Text Buffer Size */}
-          <div>
-            <label className="block text-white/80 text-sm font-sans font-medium mb-2">
-              Text Buffer Size
-            </label>
-            <div className="flex gap-2">
-              {BUFFER_SIZE_OPTIONS.map((size) => (
-                <button
-                  key={size}
-                  onClick={() => setBufferSize(size)}
-                  className={`flex-1 px-3 py-2.5 rounded-xl border text-sm font-sans font-medium transition-colors ${
-                    bufferSize === size
-                      ? "bg-brand-primary/20 border-brand-primary text-white"
-                      : "bg-white/5 border-white/20 text-white/60 hover:bg-white/10"
-                  }`}
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-            <p className="text-white/40 text-xs font-sans mt-1.5">
-              Number of words to buffer before processing
-            </p>
           </div>
         </div>
 

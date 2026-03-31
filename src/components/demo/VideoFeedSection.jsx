@@ -1,7 +1,12 @@
 import { useMediaPipeHands } from "./hooks";
 
-// Video feed component with real-time camera and hand landmarks
-export function VideoFeedSection({ videoRef, isCameraActive, error, onRetry }) {
+export function VideoFeedSection({
+  videoRef,
+  isCameraActive,
+  error,
+  onRetry,
+  isModelLoading,
+}) {
   const canvasRef = useMediaPipeHands(videoRef, isCameraActive);
 
   return (
@@ -27,11 +32,19 @@ export function VideoFeedSection({ videoRef, isCameraActive, error, onRetry }) {
         <canvas
           ref={canvasRef}
           className="absolute top-0 left-0 w-full h-full pointer-events-none"
-          style={{
-            transform: "scaleX(-1)",
-            objectFit: "cover",
-          }}
+          style={{ transform: "scaleX(-1)", objectFit: "cover" }}
         />
+      )}
+
+      {/* Model loading overlay */}
+      {isModelLoading && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-10">
+          <div className="w-10 h-10 border-4 border-white/20 border-t-white rounded-full animate-spin mb-4" />
+          <p className="text-white/90 text-sm font-medium tracking-wide">
+            Loading hand detection model...
+          </p>
+          <p className="text-white/40 text-xs mt-1">This may take a moment</p>
+        </div>
       )}
 
       {/* Camera off state */}
