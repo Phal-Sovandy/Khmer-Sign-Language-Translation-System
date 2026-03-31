@@ -4,6 +4,33 @@
 
 export const changelogs = [
   {
+    version: "1.0.0 (Release Candidate)",
+    codename: "Temporal Owl",
+    date: [2026, 3, 30],
+    intro:
+      "Capstone II marks the transition from static image classification to real-time temporal sequence recognition. The system now supports fluid movement, voice synthesis, and edge-based data processing.",
+    features: [
+      "Integrated 30-frame Sequential LSTM model for dynamic sign recognition",
+      "Full Text-to-Speech (TTS) implementation using Google Cloud Synthesis",
+      "Real-time Sign Gesture Previewer for interactive user guidance",
+      "Edge-based Landmark Streaming (sending 126 coordinates instead of raw video)",
+      "Developed custom 57,000+ frame sequential dataset for movement training",
+    ],
+    fixes: [
+      "Resolved 'Zero-Padding' issues for variable-length sign sequences",
+      "Mitigated browser thermal throttling through optimized landmark extraction",
+      "Fixed synchronization lag between AI inference and Speech output",
+      "Corrected spatial scaling errors for varying user-to-camera distances",
+    ],
+    improvements: [
+      "Shifted from single-frame snapshots to 30-frame temporal windows",
+      "Improved privacy by eliminating raw image transmission to the backend",
+      "Enhanced Khmer linguistic accuracy in TTS phonetic mapping",
+      "Optimized backend Flask architecture for concurrent stateful requests",
+      "Updated Documentation to include Sequential Data Directory structures",
+    ],
+  },
+  {
     version: "0.1.0 (Beta)",
     codename: "Speedy Rabbit",
     date: [2025, 12, 1],

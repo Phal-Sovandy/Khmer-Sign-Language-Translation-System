@@ -103,7 +103,7 @@ const requirementSections = [
     ),
     items: [
       "Python for model training and backend development.",
-      "PyTorch for machine learning model fine-tuning and inference.",
+      "Tensorflow for machine learning model fine-tuning and inference.",
       "MediaPipe for hand and gesture detection.",
       "A web framework for frontend and backend communication.",
       "Required development libraries and dependencies installed through a package manager.",

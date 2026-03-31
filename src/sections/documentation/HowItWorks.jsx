@@ -5,7 +5,6 @@ import backendArchitecture from "../../assets/images/how-it-work/backend-archite
 import landmarknetArchitecture from "../../assets/images/how-it-work/landmarknet-architecture.webp";
 import realTimeDetection from "../../assets/images/misc/demo.webp";
 import lossAccuracyCurves from "../../assets/images/loss_accuracy_curves.webp";
-import precisionRecallF1Curves from "../../assets/images/precision_recall_f1_curves.webp";
 
 /**
  * How It Works Section Component
@@ -208,20 +207,6 @@ export const HowItWorks = React.memo(() => {
             </div>
             <figcaption className="text-center text-white/50 text-sm font-sans mt-3">
               Training progress graph showing loss and accuracy curves across training epochs.
-            </figcaption>
-          </figure>
-
-          {/* Precision, Recall, F1 Curves */}
-          <figure>
-            <div className="rounded-xl overflow-hidden bg-white border border-white/10 p-4">
-              <MediaWrapper
-                src={precisionRecallF1Curves}
-                alt="Training progress graph showing precision, recall, and F1-score curves"
-                className="w-full"
-              />
-            </div>
-            <figcaption className="text-center text-white/50 text-sm font-sans mt-3">
-              Training progress graph showing precision, recall, and F1-score metrics across training epochs.
             </figcaption>
           </figure>
         </div>

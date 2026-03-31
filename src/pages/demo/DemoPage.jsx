@@ -10,6 +10,9 @@ import {
 
 export default function DemoPage() {
   const videoRef = useRef(null);
+  const handsRef = useRef(null);
+  const cameraRef = useRef(null);
+
   const detectedTextArrayRef = useRef([]);
   const [detectedTextArray, setDetectedTextArray] = useState(() => {
     try {
@@ -18,6 +21,7 @@ export default function DemoPage() {
     } catch {}
     return [];
   });
+
   const [pendingText, setPendingText] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
@@ -57,6 +61,7 @@ export default function DemoPage() {
     } catch {}
   }, [confidenceLevel]);
 
+  // Camera controls
   const startCamera = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -86,19 +91,20 @@ export default function DemoPage() {
     isCameraActive ? stopCamera() : startCamera();
   }, [isCameraActive, startCamera, stopCamera]);
 
+  // Text-to-Speech
   const speakText = useCallback(async () => {
-    const textToSpeak = detectedTextArray.map((item) => item.split(" (")[0]).join(" ");
-
+    const textToSpeak = detectedTextArray
+      .map((item) => item.split(" (")[0])
+      .join(" ");
     if (!textToSpeak) return;
 
-    // Toggle behavior: Stop if already speaking
     if (isSpeaking && window.currentAudio) {
       window.currentAudio.pause();
       setIsSpeaking(false);
       return;
     }
 
-    const API_KEY = import.meta.env.VITE_GOOGLE_TTS_API_KEY || ""; // Replace with your real key
+    const API_KEY = import.meta.env.VITE_GOOGLE_TTS_API_KEY || "";
     const url = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${API_KEY}`;
 
     try {
@@ -107,43 +113,35 @@ export default function DemoPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           input: { text: textToSpeak },
-          voice: {
-            languageCode: "km-KH",
-            ssmlGender: "FEMALE",
-          },
+          voice: { languageCode: "km-KH", ssmlGender: "FEMALE" },
           audioConfig: { audioEncoding: "MP3" },
         }),
       });
-
       const data = await response.json();
+      if (!data.audioContent) return;
 
-      if (data.audioContent) {
-        // 1. Convert Base64 string to a Blob
-        const audioBlob = new Blob(
-          [Uint8Array.from(atob(data.audioContent), (c) => c.charCodeAt(0))],
-          { type: "audio/mp3" },
-        );
+      const audioBlob = new Blob(
+        [Uint8Array.from(atob(data.audioContent), (c) => c.charCodeAt(0))],
+        { type: "audio/mp3" },
+      );
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      window.currentAudio = audio;
 
-        // 2. Create an Object URL and play it
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        window.currentAudio = audio;
+      audio.onplay = () => setIsSpeaking(true);
+      audio.onended = () => {
+        setIsSpeaking(false);
+        URL.revokeObjectURL(audioUrl);
+      };
 
-        audio.onplay = () => setIsSpeaking(true);
-        audio.onended = () => {
-          setIsSpeaking(false);
-          URL.revokeObjectURL(audioUrl); // Clean up memory
-        };
-
-        await audio.play();
-      } else {
-        console.error("Google TTS Error:", data);
-      }
-    } catch (error) {
-      console.error("Request Failed:", error);
+      await audio.play();
+    } catch (err) {
+      console.error(err);
       setIsSpeaking(false);
     }
   }, [detectedTextArray, isSpeaking]);
+
+  // Undo/Reset text
   const undoLastText = useCallback(() => {
     setDetectedTextArray((prev) => {
       const updated = prev.slice(0, -1);
@@ -167,12 +165,11 @@ export default function DemoPage() {
   const acceptPendingText = useCallback(() => {
     if (!pendingText) return;
     setDetectedTextArray((prev) => {
-      const lastLabel =
-        prev.length > 0 ? prev[prev.length - 1].split(" (")[0] : null;
+      const lastLabel = prev.length
+        ? prev[prev.length - 1].split(" (")[0]
+        : null;
       const newLabel = pendingText.split(" (")[0];
-      if (prev.length === 0 || lastLabel !== newLabel) {
-        return [...prev, pendingText];
-      }
+      if (!prev.length || lastLabel !== newLabel) return [...prev, pendingText];
       return prev;
     });
     setPendingText(null);
@@ -189,10 +186,10 @@ export default function DemoPage() {
         setPendingText(null);
         setErrorMessage(null);
         setDetectedTextArray((prev) => {
-          const lastLabel =
-            prev.length > 0 ? prev[prev.length - 1].split(" (")[0] : null;
-          if (prev.length === 0 || lastLabel !== label)
-            return [...prev, newText];
+          const lastLabel = prev.length
+            ? prev[prev.length - 1].split(" (")[0]
+            : null;
+          if (!prev.length || lastLabel !== label) return [...prev, newText];
           return prev;
         });
       } else {
@@ -206,60 +203,100 @@ export default function DemoPage() {
     [confidenceLevel],
   );
 
-  // MediaPipe Hands + Camera integration
+  // -----------------------------
+  // MediaPipe Hands + Camera Integration
+  // -----------------------------
   useEffect(() => {
     if (!isCameraActive || !videoRef.current) return;
+    if (handsRef.current) return;
+
+    let handLandmarker = null;
+    let animationId = null;
+    let running = true;
 
     const loadMediaPipe = async () => {
-      // Dynamically import MediaPipe Hands and Camera
-      const { Hands } =
-        await import("https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js");
-      const { Camera } =
-        await import("https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js");
+      const { HandLandmarker, FilesetResolver } =
+        await import("@mediapipe/tasks-vision");
 
-      const hands = new Hands({
-        locateFile: (file) =>
-          `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`,
-      });
+      const vision = await FilesetResolver.forVisionTasks(
+        "/mediapipe/tasks-vision/wasm",
+      );
 
-      hands.setOptions({
-        maxNumHands: 2,
-        modelComplexity: 1,
-        minDetectionConfidence: 0.8,
+      handLandmarker = await HandLandmarker.createFromOptions(vision, {
+        baseOptions: {
+          modelAssetPath:
+            "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
+          delegate: "GPU",
+        },
+        runningMode: "VIDEO",
+        numHands: 2,
+        minHandDetectionConfidence: 0.8,
+        minHandPresenceConfidence: 0.8,
         minTrackingConfidence: 0.5,
       });
 
-      hands.onResults((results) => {
-        const landmarks = results.multiHandLandmarks || [];
-        fetch("http://127.0.0.1:3000/predict_landmarks", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ landmarks }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.label) handlePredictionResponse(data);
-          })
-          .catch(() => {});
-      });
+      handsRef.current = handLandmarker;
 
-      const camera = new Camera(videoRef.current, {
-        onFrame: async () => {
-          await hands.send({ image: videoRef.current });
-        },
-        width: 1280,
-        height: 720,
-      });
+      const processFrame = () => {
+        if (!running || !videoRef.current || !handLandmarker) return;
 
-      camera.start();
+        const video = videoRef.current;
 
-      return () => {
-        camera.stop();
-        hands.close();
+        // Guard: skip if video has no valid frame yet
+        if (
+          video.readyState < 2 ||
+          video.videoWidth === 0 ||
+          video.videoHeight === 0 ||
+          video.paused ||
+          video.ended
+        ) {
+          animationId = requestAnimationFrame(processFrame);
+          return;
+        }
+
+        try {
+          const nowMs = performance.now();
+          const results = handLandmarker.detectForVideo(video, nowMs);
+          const landmarks = results.landmarks || [];
+
+          if (landmarks.length > 0) {
+            fetch("http://127.0.0.1:3000/predict_landmarks", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ landmarks }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.label) handlePredictionResponse(data);
+              })
+              .catch(() => {});
+          }
+        } catch (err) {
+          console.warn("Frame processing error:", err);
+        }
+
+        animationId = requestAnimationFrame(processFrame);
       };
+
+      // Wait for video to be ready
+      const video = videoRef.current;
+      if (video.readyState >= 2) {
+        processFrame();
+      } else {
+        video.addEventListener("loadeddata", processFrame, { once: true });
+      }
     };
 
-    loadMediaPipe();
+    loadMediaPipe().catch(console.error);
+
+    return () => {
+      running = false;
+      if (animationId) cancelAnimationFrame(animationId);
+      if (handsRef.current) {
+        handsRef.current.close();
+        handsRef.current = null;
+      }
+    };
   }, [isCameraActive, handlePredictionResponse]);
 
   // Keyboard shortcut: 's' to toggle camera
@@ -279,7 +316,7 @@ export default function DemoPage() {
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, [toggleCamera]);
 
-  // Cleanup on unmount
+  // Cleanup
   useEffect(() => {
     return () => {
       stopCamera();
@@ -287,6 +324,9 @@ export default function DemoPage() {
     };
   }, [stopCamera]);
 
+  // -----------------------------
+  // Render
+  // -----------------------------
   return (
     <div className="min-h-screen bg-brand-background overflow-x-clip">
       <Header showDemoButton={false} />
@@ -307,7 +347,7 @@ export default function DemoPage() {
               isRowLayout ? "flex-2 py-40 px-5" : "w-full p-5"
             } flex items-center justify-center bg-gray-900/30 rounded-xl`}
           >
-            <div className={`w-full`}>
+            <div className="w-full">
               <VideoFeedSection
                 videoRef={videoRef}
                 isCameraActive={isCameraActive}

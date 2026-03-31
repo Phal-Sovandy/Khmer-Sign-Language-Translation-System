@@ -40,7 +40,7 @@ export const ProjectOverview = React.memo(() => {
           The Khmer Sign Language Translation System is a web-based program
           created as a capstone project for third-year students in the Computer
           Science and Data Science departments. By converting Khmer sign language
-          gestures into readable text output via a straightforward web
+          gestures into readable text and speech output via a straightforward web
           interface, this system aims to facilitate communication.
         </p>
 
@@ -65,7 +65,7 @@ export const ProjectOverview = React.memo(() => {
           The system recognizes hand gestures in real time using computer
           vision and machine learning techniques. When a user signs in front of
           a camera, MediaPipe is used by the system to detect hand movements,
-          and PyTorch is used to build a trained deep learning model to process
+          and Tensorflow is used to build a trained deep learning model to process
           the gesture. To facilitate communication with non-sign language users,
           the anticipated outcome is then shown as text.
         </p>
